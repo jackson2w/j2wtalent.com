@@ -464,31 +464,62 @@
     margin-bottom: var(--space-single);
   }
   .video-wrapper {
-    max-width: 720px;
+    max-width: 1080px;
     margin: 0 auto;
     aspect-ratio: 16 / 9;
     background: var(--charcoal);
     border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .video-wrapper iframe {
+    width: 100%; height: 100%;
+    display: block;
+    border: 0;
+  }
+  /* ── YouTube facade ── */
+  .yt-facade {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+  }
+  .yt-facade img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .yt-facade:hover img { transform: scale(1.03); }
+  .yt-facade::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(13,13,13,0.55));
   }
   .play-btn {
-    width: 72px; height: 72px;
-    border: 2px solid rgba(245,240,234,0.4);
+    position: relative;
+    z-index: 1;
+    width: 80px; height: 80px;
+    background: rgba(13,13,13,0.65);
+    border: 2px solid rgba(245,240,234,0.5);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: border-color 0.3s, transform 0.3s;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
   }
-  .play-btn:hover {
+  .yt-facade:hover .play-btn {
+    background: var(--amber);
     border-color: var(--amber);
     transform: scale(1.08);
   }
-  .play-btn svg { width: 24px; height: 24px; fill: var(--warm-white); margin-left: 4px; }
+  .play-btn svg { width: 26px; height: 26px; fill: var(--warm-white); margin-left: 5px; }
   .video-caption {
     margin-top: var(--space-mini);
     font-size: var(--f-small);
@@ -744,7 +775,12 @@
     <p class="section-label">See Willie in Action</p>
     <h2>A few minutes on stage.</h2>
     <div class="video-wrapper">
-      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/_EeiQZsvK9E" title="Willie Jackson" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display:block;"></iframe>
+      <div class="yt-facade" id="yt-facade" role="button" tabindex="0" aria-label="Play: Willie Jackson — MAKERS Keynote">
+        <img src="makers-logo.jpg" alt="Willie Jackson speaking at the MAKERS Conference" loading="lazy" width="1080" height="607">
+        <div class="play-btn" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><polygon points="6,3 20,12 6,21"/></svg>
+        </div>
+      </div>
     </div>
     <p class="video-caption">MAKERS Keynote | Los Angeles, California</p>
   </div>
@@ -802,6 +838,24 @@
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   });
+
+  // YouTube facade — load iframe only on interaction
+  function activateVideo(el) {
+    const videoId = '_EeiQZsvK9E';
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+    iframe.title = 'Willie Jackson — MAKERS Keynote';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    el.replaceWith(iframe);
+  }
+  const facade = document.getElementById('yt-facade');
+  if (facade) {
+    facade.addEventListener('click', () => activateVideo(facade));
+    facade.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateVideo(facade); }
+    });
+  }
 </script>
 
 </body>
