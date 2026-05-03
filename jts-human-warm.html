@@ -169,6 +169,72 @@
     nav a:hover { color: #C45C2A; }
     .nav-link-hw.active { color: #C45C2A; font-weight: 600; }
     section[id] { scroll-margin-top: 64px; }
+
+  /* ─────────────────────────────────────────────
+     Mobile styles  (max-width: 767px)
+  ───────────────────────────────────────────── */
+  @media (max-width: 767px) {
+
+    /* Nav: hide text links, keep logo + CTA */
+    nav[aria-label="Site navigation"] { padding: 0 16px !important; }
+    .nav-links .nav-link-hw { display: none; }
+
+    /* Section side padding */
+    main section { padding-left: 20px !important; padding-right: 20px !important; }
+    main section:first-of-type { padding-bottom: 64px !important; }
+
+    /* Two-col intro split → stack */
+    .grid-split {
+      grid-template-columns: 1fr !important;
+      gap: 36px !important;
+    }
+    /* Make the image aspect ratio landscape on mobile so it doesn't dominate */
+    .grid-split > div:first-child { aspect-ratio: 3/2 !important; }
+
+    /* Three-col about (240px 1fr 240px) → single column */
+    .grid-about {
+      grid-template-columns: 1fr !important;
+      gap: 36px !important;
+    }
+    /* Sidebar headshot: cap width and centre */
+    .grid-about > div:first-child {
+      width: 200px !important;
+      margin: 0 auto !important;
+    }
+
+    /* Process 2-col → single column */
+    .grid-process {
+      grid-template-columns: 1fr !important;
+      gap: 36px !important;
+    }
+
+    /* Case study articles 2-col → single column */
+    .grid-case {
+      grid-template-columns: 1fr !important;
+      padding: 28px !important;
+      gap: 28px !important;
+    }
+
+    /* Logo grid 4-col → 2-col */
+    .grid-logos { grid-template-columns: repeat(2, 1fr) !important; }
+
+    /* Photo strip 3-col → 1-col */
+    .grid-photo { grid-template-columns: 1fr !important; }
+    .grid-photo > div { aspect-ratio: 16/9 !important; }
+
+    /* Testimonial cards */
+    .testimonial-card { padding: 24px !important; }
+
+    /* Contact: info + form → stack */
+    .grid-contact {
+      grid-template-columns: 1fr !important;
+      padding: 0 !important;
+      gap: 40px !important;
+    }
+
+    /* Form name/org row → stack */
+    .grid-form-row { grid-template-columns: 1fr !important; }
+  }
   </style>
 </head>
 <body>
@@ -176,7 +242,7 @@
   <!-- Navigation -->
   <nav aria-label="Site navigation" style="position:sticky;top:0;width:100%;padding:0 48px;display:flex;justify-content:space-between;align-items:center;height:64px;z-index:100;background:rgba(242,232,220,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(44,24,16,0.08);">
     <a href="/" style="font-weight:500;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.75;color:#2C1810;text-decoration:none;">Jackson Talent Strategies</a>
-    <div style="display:flex;align-items:center;gap:32px;">
+    <div class="nav-links" style="display:flex;align-items:center;gap:32px;">
       <a href="#services" class="nav-link-hw">Services</a>
       <a href="#about" class="nav-link-hw">About</a>
       <a href="#process" class="nav-link-hw">Process</a>
@@ -204,7 +270,7 @@
 
   <!-- About / Image Split -->
   <section id="intro" style="padding:80px 48px;background:#E8DCCB;">
-    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;">
+    <div class="grid-split" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;">
       <div style="position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;box-shadow:0 32px 80px rgba(44,24,16,0.2);">
         <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80&auto=format" alt="Colleagues collaborating in a professional setting" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;" />
         <div style="position:absolute;inset:0;background:#C45C2A;mix-blend-mode:overlay;opacity:0.15;"></div>
@@ -260,7 +326,7 @@
   <section style="padding:72px 48px;background:#E8DCCB;">
     <div style="max-width:1200px;margin:0 auto;">
       <p style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(44,24,16,0.35);text-align:center;margin:0 0 48px;">Organizations I've Partnered With</p>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px 24px;align-items:center;justify-items:center;">
+      <div class="grid-logos" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px 24px;align-items:center;justify-items:center;">
         <div style="font-weight:600;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(44,24,16,0.22);">Google</div>
         <div style="font-weight:600;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(44,24,16,0.22);">Nike</div>
         <div style="font-weight:600;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(44,24,16,0.22);">Pfizer</div>
@@ -289,7 +355,7 @@
         <h2 class="serif" style="font-size:clamp(36px,4vw,56px);margin:0 0 20px;">Willie Jackson</h2>
         <div style="width:56px;height:4px;background:#C45C2A;margin:0 auto;border-radius:2px;"></div>
       </div>
-      <div style="display:grid;grid-template-columns:240px 1fr 240px;gap:56px;align-items:start;">
+      <div class="grid-about" style="display:grid;grid-template-columns:240px 1fr 240px;gap:56px;align-items:start;">
         <div>
           <div style="aspect-ratio:3/4;overflow:hidden;border:5px solid #F2E8DC;box-shadow:0 16px 40px rgba(44,24,16,0.15);">
             <img src="willie-jackson.jpg" alt="Willie Jackson, Talent Strategist" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;" />
@@ -337,7 +403,7 @@
         <h2 class="serif" style="font-size:clamp(36px,4vw,56px);margin:0 0 20px;">How I Work</h2>
         <div style="width:56px;height:4px;background:#C45C2A;margin:0 auto;border-radius:2px;"></div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:48px;">
+      <div class="grid-process" style="display:grid;grid-template-columns:repeat(2,1fr);gap:48px;">
         <div style="display:flex;gap:28px;align-items:start;">
           <div style="width:48px;height:48px;border-radius:50%;background:#C45C2A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;margin-top:4px;">1</div>
           <div>
@@ -381,7 +447,7 @@
       <div style="display:flex;flex-direction:column;gap:48px;">
 
         <!-- Case 1 -->
-        <article style="background:#fff;padding:56px;border-radius:2px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
+        <article class="grid-case" style="background:#fff;padding:56px;border-radius:2px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
           <div>
             <p style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#C45C2A;margin:0 0 16px;">Grant-Making Non-Profit</p>
             <h3 class="serif" style="font-size:26px;margin:0 0 20px;line-height:1.3;color:#2C1810;">Rebuilding Leadership Alignment After an Unexpected CEO Departure</h3>
@@ -400,7 +466,7 @@
         </article>
 
         <!-- Case 2 -->
-        <article style="background:#fff;padding:56px;border-radius:2px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
+        <article class="grid-case" style="background:#fff;padding:56px;border-radius:2px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
           <div>
             <p style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#C45C2A;margin:0 0 16px;">Multinational Media Conglomerate</p>
             <h3 class="serif" style="font-size:26px;margin:0 0 20px;line-height:1.3;color:#2C1810;">People Integration After a Culture-Defining Acquisition</h3>
@@ -419,7 +485,7 @@
         </article>
 
         <!-- Case 3 -->
-        <article style="background:#fff;padding:56px;border-radius:2px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
+        <article class="grid-case" style="background:#fff;padding:56px;border-radius:2px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
           <div>
             <p style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#C45C2A;margin:0 0 16px;">Global Hedge Fund</p>
             <h3 class="serif" style="font-size:26px;margin:0 0 20px;line-height:1.3;color:#2C1810;">Talent Architecture for a Fund That Grew Faster Than Its Infrastructure</h3>
@@ -465,7 +531,7 @@
 
   <!-- From the Stage -->
   <section aria-label="Willie Jackson speaking and facilitating" style="overflow:hidden;">
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;">
+    <div class="grid-photo" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;">
       <div style="aspect-ratio:4/3;overflow:hidden;">
         <img src="wj-facilitating-mbs.jpg" alt="Willie Jackson presenting at a conference" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
       </div>
@@ -529,19 +595,19 @@
 
   <!-- Contact Form -->
   <section id="contact" style="padding:96px 48px;background:#2C1810;color:#F2E8DC;">
-    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start;">
+    <div class="grid-contact" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start;">
       <div>
         <h2 class="serif" style="font-size:clamp(48px,5vw,72px);line-height:1.1;margin:0 0 28px;">Start a Conversation</h2>
         <p style="font-size:19px;line-height:1.7;color:rgba(242,232,220,0.65);max-width:400px;margin:0 0 48px;">
           Every engagement begins the same way, with an honest conversation about where you are and where you're trying to go.
         </p>
         <div>
-          <div style="color:#C45C2A;font-weight:500;font-size:15px;margin-bottom:8px;">willie@j2wtalent.com</div>
+          <div style="color:#C45C2A;font-weight:500;font-size:15px;margin-bottom:8px;">will@j2wtalent.com</div>
           <div style="color:rgba(242,232,220,0.4);font-size:13px;">Response within 1 business day</div>
         </div>
       </div>
       <form id="contact-form" style="display:flex;flex-direction:column;gap:24px;" onsubmit="handleSubmit(event)" novalidate>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="grid-form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
           <div>
             <label for="name" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(242,232,220,0.4);display:block;margin-bottom:8px;">Name</label>
             <input id="name" class="dark-input" type="text" name="name" autocomplete="name" placeholder="Jane Smith" required />
