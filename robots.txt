@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block access to the Cloudflare Pages Function endpoint
+Disallow: /contact
+
+Sitemap: https://j2wtalent.com/sitemap.xml
