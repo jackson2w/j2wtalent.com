@@ -151,7 +151,7 @@
 
     .display {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 7vw, var(--t-2xl));
+      font-size: clamp(1.65rem, 7vw, var(--t-2xl));
       line-height: 1.08;
       letter-spacing: -0.01em;
       color: var(--text);
@@ -192,7 +192,7 @@
 
     .section-head {
       text-align: center;
-      margin-bottom: var(--s-4);
+      margin-bottom: clamp(var(--s-3), 8vw, var(--s-4));
     }
     .section-head .eyebrow { margin-bottom: var(--s-1); }
     .section-head .heading { margin-bottom: var(--s-2); }
@@ -438,7 +438,7 @@
 
     .sidebar-quote {
       background: var(--bg);
-      padding: var(--s-3);
+      padding: clamp(var(--s-2), 5vw, var(--s-3));
       border-radius: 2px;
       margin-bottom: var(--s-3);
     }
@@ -571,7 +571,7 @@
     .testimonial-card {
       background: var(--bg-alt);
       border-radius: 12px;
-      padding: var(--s-3);
+      padding: clamp(var(--s-2), 5vw, var(--s-3));
       display: flex;
       flex-direction: column;
     }

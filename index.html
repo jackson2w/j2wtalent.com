@@ -8,8 +8,8 @@
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Willie Jackson" />
   <link rel="canonical" href="https://j2wtalent.com/" />
+  <meta name="theme-color" content="#0D0D0D" />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230D0D0D'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='16' fill='%230066CC'%3EW%3C/text%3E%3C/svg%3E" />
 
   <!-- Open Graph -->
@@ -67,209 +67,744 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Space Grotesk', sans-serif; background: #0D0D0D; color: #fff; margin: 0; }
 
-    .hero-bg {
+  <style>
+    /* ─── RESET ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 17px;      /* GRT base — 1rem = 17px */
+      overflow-x: hidden;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #0D0D0D;
+      color: #fff;
+      line-height: 1.618;   /* φ — the golden ratio */
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+    img, video, iframe { max-width: 100%; display: block; }
+    ::selection { background: #0066CC; color: #fff; }
+
+    /* ─── GRT CUSTOM PROPERTIES ──────────────────────────────────── */
+    :root {
+      --phi: 1.618;
+
+      /* Type scale — each step × φ from 17px base */
+      --t-xs:   0.647rem;   /* ~11px — eyebrow / labels          */
+      --t-sm:   0.824rem;   /* ~14px — captions / meta           */
+      --t-base: 1rem;       /* 17px  — body copy                 */
+      --t-lg:   1.618rem;   /* ~27px — card headings             */
+      --t-xl:   2.618rem;   /* ~44px — section headings          */
+      --t-2xl:  4.236rem;   /* ~72px — display / decorative nums */
+
+      /* Spacing — multiples of GRT line-height unit (17 × φ ≈ 27.5px) */
+      --s-1: 0.809rem;   /* ~14px */
+      --s-2: 1.618rem;   /* ~27px */
+      --s-3: 2.618rem;   /* ~44px */
+      --s-4: 4.236rem;   /* ~72px */
+      --s-5: 6.854rem;   /* ~116px */
+
+      /* Layout */
+      --max-w:      1100px;
+      --max-w-wide: 1200px;
+      --gutter:     clamp(1.25rem, 5vw, 3rem);
+      --section-v:  clamp(3rem, 8vw, var(--s-4));
+      --nav-h:      3.765rem;   /* 64px — fixed nav height */
+
+      /* Colors */
+      --bg:          #0D0D0D;
+      --bg-alt:      #0A0A0A;
+      --bg-card:     #111111;
+      --accent:      #0066CC;
+      --accent-dim:  rgba(0,102,204,0.7);
+      --text:        #FFFFFF;
+      --text-muted:  rgba(255,255,255,0.55);
+      --text-faint:  rgba(255,255,255,0.30);
+      --text-xfaint: rgba(255,255,255,0.18);
+      --border:      rgba(255,255,255,0.10);
+      --border-faint:rgba(255,255,255,0.06);
+    }
+
+    /* ─── TYPOGRAPHY ─────────────────────────────────────────────── */
+    .eyebrow {
+      display: block;
+      font-size: var(--t-xs);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      font-weight: 400;
+      line-height: var(--phi);
+    }
+    .eyebrow--accent { color: var(--accent); }
+
+    .display {
+      font-size: clamp(1.882rem, 7vw, var(--t-2xl));
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .heading {
+      font-size: clamp(1.647rem, 4vw, var(--t-xl));
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .subheading {
+      font-size: var(--t-lg);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .body-text { font-size: var(--t-base); line-height: var(--phi); color: var(--text-muted); }
+    .lead { font-size: clamp(var(--t-base), 2.5vw, 1.176rem); line-height: 1.7; color: var(--text-muted); }
+
+    /* ─── LAYOUT UTILITIES ───────────────────────────────────────── */
+    .section {
+      padding-block: var(--section-v);
+      padding-inline: var(--gutter);
+    }
+    .section--alt  { background: var(--bg-alt); }
+    .section--card { background: var(--bg-card); }
+
+    .container       { max-width: var(--max-w);      margin-inline: auto; width: 100%; }
+    .container--wide { max-width: var(--max-w-wide); margin-inline: auto; width: 100%; }
+
+    .section-head { margin-bottom: clamp(var(--s-3), 8vw, var(--s-4)); }
+    .section-head .eyebrow  { margin-bottom: var(--s-1); }
+    .section-head .heading  { margin-top: var(--s-1); }
+
+    /* ─── GRIDS — mobile-first: all 1-col; expand at breakpoints ── */
+    .grid-2,
+    .grid-about,
+    .grid-contact { display: grid; gap: var(--s-3); }
+
+    .grid-logos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--s-2);
+      align-items: center;
+      justify-items: center;
+    }
+
+    .grid-auto {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+      gap: var(--s-3);
+    }
+
+    .grid-process { display: grid; gap: 2px; }
+    .grid-photos  { display: grid; }
+    .grid-video   { display: grid; gap: var(--s-3); align-items: center; }
+    .form-row     { display: grid; gap: var(--s-2); }
+    .stat-grid    { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
+    .case-grid    { display: grid; gap: var(--s-3); }
+
+    /* ─── BUTTONS ────────────────────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: var(--t-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn--white  { background: #fff; color: var(--bg); padding: 0.824rem 1.882rem; }
+    .btn--white:hover { background: var(--accent); color: #fff; }
+    .btn--accent { background: var(--accent); color: #fff; padding: 1.059rem 1.882rem; text-align: center; }
+    .btn--accent:hover { background: #fff; color: var(--bg); }
+    .btn--full   { width: 100%; display: block; }
+    .btn--sm     { font-size: calc(var(--t-xs) * 0.917); padding: 0.588rem 1.294rem; }
+
+    /* ─── FORM ELEMENTS ──────────────────────────────────────────── */
+    .field { display: flex; flex-direction: column; gap: var(--s-1); }
+    .field-label {
+      font-size: var(--t-xs);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      color: var(--text);
+      outline: none;
+      width: 100%;
+      padding: 0.706rem 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: var(--t-base);
+      line-height: var(--phi);
+      transition: border-color 0.3s;
+    }
+    .input:focus { border-bottom-color: var(--accent); }
+    .input::placeholder { color: rgba(255,255,255,0.3); }
+
+    /* ─── NAVIGATION ─────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-faint);
+      padding-inline: var(--gutter);
+    }
+    .nav__inner {
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s-2);
+      max-width: var(--max-w-wide);
+      margin-inline: auto;
+    }
+    .nav__brand {
+      font-weight: 700;
+      font-size: var(--t-xs);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav__links {
+      display: none;
+      align-items: center;
+      gap: var(--s-3);
+      list-style: none;
+    }
+    .nav__link {
+      color: var(--text-faint);
+      font-size: var(--t-xs);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.3s;
+    }
+    .nav__link:hover         { color: rgba(255,255,255,0.8); }
+    .nav__link.active        { color: var(--accent); }
+    .nav__cta { flex-shrink: 0; }
+
+    section[id] { scroll-margin-top: var(--nav-h); }
+
+    /* ─── HERO ───────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: clamp(var(--s-5), 15vw, 10rem);
+      padding-bottom: var(--s-4);
+      padding-inline: var(--gutter);
       background-image:
         linear-gradient(to right, rgba(13,13,13,0.97) 40%, rgba(13,13,13,0.65)),
         url('wj-facilitating-mbs.jpg');
       background-size: cover;
       background-position: center;
     }
-
-    ::selection { background: #0066CC; color: #fff; }
-
-    .input-field {
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      color: #fff;
-      outline: none;
-      width: 100%;
-      padding: 12px 0;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 16px;
-      transition: border-color 0.3s;
+    .hero__inner       { max-width: 800px; }
+    .hero__headline    { margin-bottom: var(--s-3); }
+    .hero__rule        { display: flex; align-items: center; gap: var(--s-2); }
+    .hero__rule-line   { width: 4.706rem; height: 3px; background: var(--accent); flex-shrink: 0; }
+    .hero__subline {
+      font-size: clamp(var(--t-base), 3vw, 1.882rem);
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
     }
-    .input-field:focus { border-bottom-color: #0066CC; }
-    .input-field::placeholder { color: rgba(255,255,255,0.3); }
 
-    .service-card { border-top: 2px solid rgba(255,255,255,0.1); transition: border-color 0.5s; }
-    .service-card:hover { border-top-color: #0066CC; }
-    .service-num { color: #0066CC; opacity: 0.5; transition: opacity 0.5s; }
-    .service-card:hover .service-num { opacity: 1; }
-
-    .btn-primary {
-      background: #fff;
-      color: #0D0D0D;
-      padding: 14px 32px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s;
-      text-decoration: none;
-      display: inline-block;
+    /* ─── INTRO ──────────────────────────────────────────────────── */
+    .intro { text-align: center; }
+    .intro__text {
+      font-size: clamp(1.176rem, 3.5vw, 3rem);
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: clamp(var(--s-3), 5vw, var(--s-4));
     }
-    .btn-primary:hover { background: #0066CC; color: #fff; }
-
-    .btn-blue {
-      background: #0066CC;
-      color: #fff;
-      padding: 18px 32px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s;
-      width: 100%;
+    .intro__line {
+      width: 1px;
+      height: 7.059rem;
+      background: var(--accent);
+      margin-inline: auto;
     }
-    .btn-blue:hover { background: #fff; color: #0D0D0D; }
 
-    .testimonial-card {
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 40px;
+    /* ─── SERVICE CARDS ──────────────────────────────────────────── */
+    .service-card {
+      border-top: 2px solid var(--border);
+      padding-top: var(--s-2);
       transition: border-color 0.5s;
     }
+    .service-card:hover { border-top-color: var(--accent); }
+    .service-num {
+      font-size: var(--t-2xl);
+      font-weight: 700;
+      color: var(--accent);
+      opacity: 0.5;
+      margin-bottom: var(--s-2);
+      line-height: 1;
+      transition: opacity 0.5s;
+    }
+    .service-card:hover .service-num { opacity: 1; }
+    .service-card .subheading { margin-bottom: var(--s-1); }
+
+    /* ─── CLIENT LOGOS ───────────────────────────────────────────── */
+    .logo-item {
+      font-weight: 700;
+      font-size: var(--t-xs);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-xfaint);
+      text-align: center;
+    }
+
+    /* ─── ABOUT ──────────────────────────────────────────────────── */
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    .about-bio .eyebrow  { margin-bottom: var(--s-1); }
+    .about-bio .heading  { margin-bottom: var(--s-3); }
+    .about-bio p { color: var(--text-muted); margin-bottom: var(--s-2); }
+    .about-bio p:last-child { margin-bottom: 0; }
+
+    .sidebar-quote {
+      border-left: 2px solid var(--accent);
+      padding: var(--s-3) var(--s-3) var(--s-3) calc(var(--s-3) + var(--s-1));
+      margin-bottom: var(--s-3);
+    }
+    .sidebar-quote p {
+      font-size: 1.294rem;
+      line-height: 1.5;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .stat-value {
+      font-size: clamp(var(--t-lg), 3vw, var(--t-xl));
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: var(--s-1);
+    }
+    .stat-label { font-size: var(--t-xs); color: var(--text-faint); letter-spacing: 0.05em; }
+
+    /* ─── PROCESS ────────────────────────────────────────────────── */
+    .process-step {
+      border-top: 2px solid var(--border);
+      padding: var(--s-3) var(--s-2);
+    }
+    .process-step--active { border-top-color: var(--accent); }
+    .process-num {
+      font-size: var(--t-xl);
+      font-weight: 700;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      margin-bottom: var(--s-2);
+      font-variant-numeric: tabular-nums;
+    }
+    .process-step .subheading { margin-bottom: var(--s-1); }
+
+    /* ─── CASE STUDIES ───────────────────────────────────────────── */
+    .case-list { display: flex; flex-direction: column; }
+    .case-article {
+      border-top: 1px solid var(--border);
+      padding-block: var(--s-3);
+    }
+    .case-article:last-child { border-bottom: 1px solid var(--border); }
+    .case-num {
+      font-size: var(--t-2xl);
+      font-weight: 700;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .case-tag {
+      font-size: var(--t-xs);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: var(--s-2);
+    }
+    .case-article .subheading { margin-bottom: var(--s-2); }
+    .case-outcome-tag {
+      font-size: var(--t-xs);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-dim);
+      margin-bottom: var(--s-2);
+    }
+    .case-article .body-text { margin-bottom: var(--s-2); }
+    .outcome-list {
+      padding-left: var(--s-2);
+      color: rgba(255,255,255,0.7);
+      font-size: var(--t-sm);
+      line-height: 1.8;
+    }
+
+    /* ─── VIDEO ──────────────────────────────────────────────────── */
+    .video-section__text .eyebrow  { margin-bottom: var(--s-1); }
+    .video-section__text .heading  { margin-bottom: var(--s-2); }
+    .video-wrap {
+      position: relative;
+      aspect-ratio: 16/9;
+      cursor: pointer;
+      overflow: hidden;
+      background: #111;
+    }
+    .video-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-play-btn {
+      width: 4.706rem;
+      height: 4.706rem;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── PHOTO STRIP ────────────────────────────────────────────── */
+    .photo-strip { overflow: hidden; }
+    .grid-photos > div { aspect-ratio: 4/3; overflow: hidden; }
+    .grid-photos img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s;
+    }
+
+    /* ─── TESTIMONIALS ───────────────────────────────────────────── */
+    .testimonial-card {
+      border: 1px solid var(--border);
+      padding: clamp(var(--s-2), 5vw, var(--s-3));
+      transition: border-color 0.5s;
+      display: flex;
+      flex-direction: column;
+    }
     .testimonial-card:hover { border-color: rgba(0,102,204,0.5); }
-    .footer-link { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
-    .footer-link:hover { color: #fff; }
-    .nav-link-ba { color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: color 0.3s; }
-    .nav-link-ba:hover { color: rgba(255,255,255,0.8); }
-    .nav-link-ba.active { color: #0066CC; }
-    section[id] { scroll-margin-top: 72px; }
+    .testimonial-icon {
+      width: 1.882rem;
+      height: 1.882rem;
+      color: var(--accent);
+      opacity: 0.6;
+      margin-bottom: var(--s-2);
+      flex-shrink: 0;
+    }
+    .testimonial-card blockquote {
+      font-size: var(--t-base);
+      line-height: 1.7;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: var(--s-3);
+      flex: 1;
+    }
+    .testimonial-card footer {
+      border-top: 1px solid var(--border);
+      padding-top: var(--s-2);
+    }
+    .testimonial-name { font-weight: 700; font-size: var(--t-sm); }
+    .testimonial-org  { color: var(--text-faint); font-size: var(--t-xs); margin-top: 0.25rem; }
+
+    /* ─── QUOTE BANNER ───────────────────────────────────────────── */
+    .quote-banner {
+      position: relative;
+      overflow: hidden;
+      padding-block: clamp(var(--s-3), 10vw, var(--s-5));
+      padding-inline: var(--gutter);
+    }
+    .quote-banner__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url(wj-speaking.jpg);
+      background-size: cover;
+      background-position: center 30%;
+    }
+    .quote-banner__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,20,60,0.80);
+    }
+    .quote-banner__content {
+      position: relative;
+      max-width: 900px;
+      margin-inline: auto;
+      text-align: center;
+    }
+    .quote-banner__icon {
+      width: 3.294rem;
+      height: 3.294rem;
+      margin: 0 auto var(--s-3);
+      opacity: 0.5;
+    }
+    .quote-banner__text {
+      font-size: clamp(1.647rem, 4vw, var(--t-xl));
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    /* ─── CONTACT ────────────────────────────────────────────────── */
+    .contact-intro .eyebrow { margin-bottom: var(--s-2); }
+    .contact-intro .heading { margin-bottom: var(--s-2); }
+    .contact-intro .lead    { margin-bottom: var(--s-3); max-width: 24rem; }
+    .contact-email { color: var(--accent); font-weight: 500; font-size: var(--t-sm); margin-bottom: 0.471rem; }
+    .contact-note  { color: var(--text-faint); font-size: var(--t-sm); }
+    .contact-form  { display: flex; flex-direction: column; gap: var(--s-3); }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    .footer {
+      padding-block: var(--s-3);
+      padding-inline: var(--gutter);
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--s-1);
+    }
+    .footer__copy { font-size: var(--t-xs); letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-faint); }
+    .footer__links { display: flex; gap: var(--s-3); }
+    .footer__link {
+      color: var(--text-faint);
+      text-decoration: none;
+      font-size: var(--t-xs);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .footer__link:hover { color: var(--text); }
+
+    /* ─── FOOTER MOBILE NAV ──────────────────────────────────────── */
+    .footer-nav {
+      display: flex;
+      gap: var(--s-2);
+      flex-wrap: wrap;
+      width: 100%;
+      border-top: 1px solid var(--border);
+      padding-top: var(--s-2);
+      margin-top: var(--s-1);
+    }
+    .footer-nav a {
+      font-size: var(--t-xs);
+      color: var(--text-faint);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .footer-nav a:hover { color: var(--text); }
+
+    /* ─── SKIP LINK ──────────────────────────────────────────────── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--gutter, 1.25rem);
+      z-index: 999;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0 0 6px 6px;
+      font-size: var(--t-sm);
+      font-weight: 600;
+      text-decoration: none;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ─── FOCUS VISIBLE ──────────────────────────────────────────── */
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+    a:focus:not(:focus-visible) { outline: none; }
+
+    /* ─── REDUCED MOTION ─────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────────── */
+    /* RESPONSIVE — min-width breakpoints (mobile-first)               */
+    /* ─────────────────────────────────────────────────────────────── */
+
+    /* 600px — logos 4-col, process 2-col, form row */
+    @media (min-width: 600px) {
+      .grid-logos   { grid-template-columns: repeat(4, 1fr); gap: var(--s-2) var(--s-3); }
+      .grid-process { grid-template-columns: repeat(2, 1fr); }
+      .form-row     { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* 768px — about 3-col, contact 2-col, video 2-col, photos 3-col, case grid */
+    @media (min-width: 768px) {
+      .grid-about   { grid-template-columns: 300px 1fr 260px; gap: var(--s-4); align-items: start; }
+      .grid-contact { grid-template-columns: 1fr 1fr; gap: var(--s-5); }
+      .grid-video   { grid-template-columns: 260px 1fr; gap: var(--s-4); }
+      .grid-photos  { grid-template-columns: repeat(3, 1fr); }
+      .grid-photos > div:hover img { transform: scale(1.05); }
+      .case-grid    { grid-template-columns: var(--t-2xl) 1fr 1fr; }
+    }
+
+    /* 900px — nav links show, grid-2 expands, process 4-col, footer-nav hidden */
+    @media (min-width: 900px) {
+      .nav__links   { display: flex; }
+      .grid-2       { grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+      .grid-process { grid-template-columns: repeat(4, 1fr); }
+      .footer-nav   { display: none; }
+    }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <!-- Navigation -->
-  <nav aria-label="Site navigation" style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;">
-    <a href="/" style="font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:#fff;text-decoration:none;">Jackson Talent Strategies</a>
-    <div style="display:flex;align-items:center;gap:36px;">
-      <a href="#services" class="nav-link-ba">Services</a>
-      <a href="#about" class="nav-link-ba">About</a>
-      <a href="#process" class="nav-link-ba">Process</a>
-      <a href="#work" class="nav-link-ba">Work</a>
-      <a href="#contact" class="nav-link-ba">Contact</a>
-      <a href="#contact" class="btn-primary" style="font-size:11px;padding:10px 22px;">Book a Conversation</a>
+  <nav class="nav" aria-label="Site navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__brand">Jackson Talent Strategies</a>
+      <ul class="nav__links" role="list">
+        <li><a href="#services" class="nav__link">Services</a></li>
+        <li><a href="#about"    class="nav__link">About</a></li>
+        <li><a href="#process"  class="nav__link">Process</a></li>
+        <li><a href="#work"     class="nav__link">Work</a></li>
+        <li><a href="#contact"  class="nav__link">Contact</a></li>
+      </ul>
+      <a href="#contact" class="btn btn--white btn--sm nav__cta">Book a Conversation</a>
     </div>
   </nav>
-  <main>
+
+  <main id="main-content">
 
   <!-- Hero -->
-  <section class="hero-bg" style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:180px 48px 64px;">
-    <div style="max-width:800px;">
-      <h1 style="font-size:clamp(48px,7vw,88px);font-weight:700;line-height:1.05;letter-spacing:-0.02em;margin:0 0 40px;">
+  <section class="hero">
+    <div class="hero__inner">
+      <h1 class="display hero__headline">
         Your people are navigating more change than your systems were built for.
       </h1>
-      <div style="display:flex;align-items:center;gap:24px;">
-        <div style="width:80px;height:3px;background:#0066CC;flex-shrink:0;"></div>
-        <p style="font-size:clamp(20px,3vw,32px);font-weight:300;color:rgba(255,255,255,0.7);margin:0;letter-spacing:0.02em;">
-          I help them lead through it.
-        </p>
+      <div class="hero__rule">
+        <div class="hero__rule-line" aria-hidden="true"></div>
+        <p class="hero__subline">I help them lead through it.</p>
       </div>
     </div>
   </section>
 
-  <!-- About -->
-  <section style="padding:160px 48px;background:#0D0D0D;">
-    <div style="max-width:800px;margin:0 auto;text-align:center;">
-      <h2 style="font-size:clamp(28px,4vw,52px);font-weight:500;line-height:1.2;margin:0 0 64px;">
+  <!-- Intro Statement -->
+  <section class="section">
+    <div class="container intro">
+      <h2 class="intro__text">
         Willie Jackson is a talent strategist and facilitator who works with organizations facing the human side of high-stakes change.
       </h2>
-      <div style="width:1px;height:120px;background:#0066CC;margin:0 auto;"></div>
+      <div class="intro__line" aria-hidden="true"></div>
     </div>
   </section>
 
   <!-- Services -->
-  <section id="services" style="padding:96px 48px;border-top:1px solid rgba(255,255,255,0.1);background:#0A0A0A;">
-    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:48px;">
-      <div class="service-card" style="padding-top:32px;">
-        <div class="service-num" style="font-size:64px;font-weight:700;margin-bottom:32px;">01</div>
-        <h3 style="font-size:28px;font-weight:700;margin:0 0 20px;line-height:1.2;">Organizational Change Facilitation</h3>
-        <p style="color:rgba(255,255,255,0.5);font-size:17px;line-height:1.7;font-weight:300;margin:0;">Guiding executive teams and entire workforces through complex transitions with clarity and alignment.</p>
-      </div>
-      <div class="service-card" style="padding-top:32px;">
-        <div class="service-num" style="font-size:64px;font-weight:700;margin-bottom:32px;">02</div>
-        <h3 style="font-size:28px;font-weight:700;margin:0 0 20px;line-height:1.2;">Leadership Development</h3>
-        <p style="color:rgba(255,255,255,0.5);font-size:17px;line-height:1.7;font-weight:300;margin:0;">Equipping leaders with the emotional intelligence and strategic frameworks needed in high-pressure environments.</p>
-      </div>
-      <div class="service-card" style="padding-top:32px;">
-        <div class="service-num" style="font-size:64px;font-weight:700;margin-bottom:32px;">03</div>
-        <h3 style="font-size:28px;font-weight:700;margin:0 0 20px;line-height:1.2;">Talent Strategy</h3>
-        <p style="color:rgba(255,255,255,0.5);font-size:17px;line-height:1.7;font-weight:300;margin:0;">Redesigning how you attract, retain, and develop people when the old playbooks no longer apply.</p>
+  <section class="section section--alt" id="services" style="border-top:1px solid var(--border-faint);">
+    <div class="container--wide">
+      <div class="grid-auto">
+        <div class="service-card">
+          <div class="service-num" aria-hidden="true">01</div>
+          <h3 class="subheading">Organizational Change Facilitation</h3>
+          <p class="body-text" style="margin-top:var(--s-1);">Guiding executive teams and entire workforces through complex transitions with clarity and alignment.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-num" aria-hidden="true">02</div>
+          <h3 class="subheading">Leadership Development</h3>
+          <p class="body-text" style="margin-top:var(--s-1);">Equipping leaders with the emotional intelligence and strategic frameworks needed in high-pressure environments.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-num" aria-hidden="true">03</div>
+          <h3 class="subheading">Talent Strategy</h3>
+          <p class="body-text" style="margin-top:var(--s-1);">Redesigning how you attract, retain, and develop people when the old playbooks no longer apply.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Client Logos -->
-  <section style="padding:80px 48px;border-top:1px solid rgba(255,255,255,0.1);background:#0D0D0D;">
-    <div style="max-width:1200px;margin:0 auto;">
-      <p style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.25);text-align:center;margin:0 0 56px;">Trusted by Leaders At</p>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px 32px;align-items:center;justify-items:center;">
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Google</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Nike</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Pfizer</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Meta</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Verizon</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Bloomberg</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Wharton</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Johnson &amp; Johnson</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Hilton</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Strava</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Chime</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Mailchimp</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Braze</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Mizuho</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Wellington</div>
-        <div style="font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.18);">Man Group</div>
+  <section class="section" style="border-top:1px solid var(--border);">
+    <div class="container--wide">
+      <p class="eyebrow" style="text-align:center;margin-bottom:var(--s-3);">Trusted by Leaders At</p>
+      <div class="grid-logos">
+        <div class="logo-item">Google</div>
+        <div class="logo-item">Nike</div>
+        <div class="logo-item">Pfizer</div>
+        <div class="logo-item">Meta</div>
+        <div class="logo-item">Verizon</div>
+        <div class="logo-item">Bloomberg</div>
+        <div class="logo-item">Wharton</div>
+        <div class="logo-item">Johnson &amp; Johnson</div>
+        <div class="logo-item">Hilton</div>
+        <div class="logo-item">Strava</div>
+        <div class="logo-item">Chime</div>
+        <div class="logo-item">Mailchimp</div>
+        <div class="logo-item">Braze</div>
+        <div class="logo-item">Mizuho</div>
+        <div class="logo-item">Wellington</div>
+        <div class="logo-item">Man Group</div>
       </div>
     </div>
   </section>
 
   <!-- About -->
-  <section id="about" style="padding:120px 48px;background:#0a0a0a;">
-    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:300px 1fr 260px;gap:64px;align-items:start;">
-      <div>
-        <img src="willie-jackson.jpg" alt="Willie Jackson, Talent Strategist" fetchpriority="high" style="width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top center;display:block;" />
-      </div>
-      <div>
-        <p style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:0 0 20px;">About</p>
-        <h2 style="font-size:clamp(36px,4vw,52px);font-weight:700;margin:0 0 40px;line-height:1.1;">Willie Jackson</h2>
-        <p style="font-size:16px;line-height:1.8;color:rgba(255,255,255,0.6);margin:0 0 24px;">I started as an IT consultant. Enterprise software deployments at Accenture, then years building digital platforms and learning infrastructure. I kept gravitating toward a harder problem, though: how do you get people to actually change? How do you build organizations where that change sticks?</p>
-        <p style="font-size:16px;line-height:1.8;color:rgba(255,255,255,0.6);margin:0 0 24px;">That question led me to Seth Godin's altMBA, where I served as Founding Technical Lead and helped build a global leadership program now reaching 7,000+ professionals across 100+ countries. It led me to found Abernathy, a magazine dedicated to Black leadership and identity, and eventually to ReadySet. I spent seven years there leading inclusive leadership programs for 200+ organizations worldwide, ultimately as Partner and Head of Growth.</p>
-        <p style="font-size:16px;line-height:1.8;color:rgba(255,255,255,0.6);margin:0 0 24px;">In 2015, I launched Jackson Talent Strategies to focus entirely on the work I care most about: helping executives and HR leaders design strategies that actually move people. No junior team between us. No off-the-shelf curriculum. Just rigorous, relational work built around what you're specifically navigating.</p>
-        <p style="font-size:16px;line-height:1.8;color:rgba(255,255,255,0.6);margin:0;">Today I partner with organizations on AI upskilling, leadership development, and large-scale organizational change. Based in Dallas, working with clients globally.</p>
-      </div>
-      <div style="padding-top:8px;">
-        <div style="border-left:2px solid #0066CC;padding:40px 40px 40px 48px;margin-bottom:48px;">
-          <p style="font-size:22px;line-height:1.5;font-weight:500;margin:0;color:rgba(255,255,255,0.85);">"The hardest problems aren't structural. They're human."</p>
+  <section class="section section--alt" id="about">
+    <div class="container--wide">
+      <div class="grid-about">
+        <!-- Photo -->
+        <div>
+          <img class="about-photo" src="willie-jackson.jpg" alt="Willie Jackson, Talent Strategist" loading="lazy" decoding="async" />
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
-          <div>
-            <div style="font-size:36px;font-weight:700;color:#0066CC;line-height:1;margin-bottom:8px;">12+</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">Years in HR, talent strategy &amp; organizational change</div>
+        <!-- Bio -->
+        <div class="about-bio">
+          <p class="eyebrow">About</p>
+          <h2 class="heading">Willie Jackson</h2>
+          <p>I started as an IT consultant. Enterprise software deployments at Accenture, then years building digital platforms and learning infrastructure. I kept gravitating toward a harder problem, though: how do you get people to actually change? How do you build organizations where that change sticks?</p>
+          <p>That question led me to Seth Godin's altMBA, where I served as Founding Technical Lead and helped build a global leadership program now reaching 7,000+ professionals across 100+ countries. It led me to found Abernathy, a magazine dedicated to Black leadership and identity, and eventually to ReadySet. I spent seven years there leading inclusive leadership programs for 200+ organizations worldwide, ultimately as Partner and Head of Growth.</p>
+          <p>In 2015, I launched Jackson Talent Strategies to focus entirely on the work I care most about: helping executives and HR leaders design strategies that actually move people. No junior team between us. No off-the-shelf curriculum. Just rigorous, relational work built around what you're specifically navigating.</p>
+          <p>Today I partner with organizations on AI upskilling, leadership development, and large-scale organizational change. Based in Dallas, working with clients globally.</p>
+        </div>
+        <!-- Sidebar -->
+        <div style="padding-top:var(--s-1);">
+          <div class="sidebar-quote">
+            <p>"The hardest problems aren't structural. They're human."</p>
           </div>
-          <div>
-            <div style="font-size:36px;font-weight:700;color:#0066CC;line-height:1;margin-bottom:8px;">450+</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">Managers trained in leadership, inclusion &amp; team effectiveness</div>
-          </div>
-          <div>
-            <div style="font-size:36px;font-weight:700;color:#0066CC;line-height:1;margin-bottom:8px;">200+</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">Organizations served across industries, sectors, and geographies</div>
-          </div>
-          <div>
-            <div style="font-size:36px;font-weight:700;color:#0066CC;line-height:1;margin-bottom:8px;">Keynote</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">Speaker on talent strategy, culture change, and organizational transformation</div>
+          <div class="stat-grid">
+            <div>
+              <div class="stat-value">12+</div>
+              <div class="stat-label">Years in HR, talent strategy &amp; organizational change</div>
+            </div>
+            <div>
+              <div class="stat-value">450+</div>
+              <div class="stat-label">Managers trained in leadership, inclusion &amp; team effectiveness</div>
+            </div>
+            <div>
+              <div class="stat-value">200+</div>
+              <div class="stat-label">Organizations served across industries, sectors, and geographies</div>
+            </div>
+            <div>
+              <div class="stat-value">Keynote</div>
+              <div class="stat-label">Speaker on talent strategy, culture change, and organizational transformation</div>
+            </div>
           </div>
         </div>
       </div>
@@ -277,100 +812,103 @@
   </section>
 
   <!-- How I Work -->
-  <section id="process" style="padding:120px 48px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);">
-    <div style="max-width:1200px;margin:0 auto;">
-      <div style="margin-bottom:80px;">
-        <p style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:0 0 20px;">The Process</p>
-        <h2 style="font-size:clamp(36px,4vw,56px);font-weight:700;margin:0;">How I Work</h2>
+  <section class="section" id="process" style="border-top:1px solid var(--border-faint);">
+    <div class="container--wide">
+      <div class="section-head">
+        <p class="eyebrow">The Process</p>
+        <h2 class="heading">How I Work</h2>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;">
-        <div style="border-top:2px solid #0066CC;padding:40px 32px 40px 0;">
-          <div style="font-size:48px;font-weight:700;color:rgba(255,255,255,0.06);line-height:1;margin-bottom:24px;font-variant-numeric:tabular-nums;">01</div>
-          <h3 style="font-size:18px;font-weight:700;margin:0 0 16px;letter-spacing:-0.01em;">Start With a Conversation</h3>
-          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.5);margin:0;">Before anything else, we talk directly. You describe what's happening, what's been tried, and what success would actually look like. No pitch deck. No intake form. Just a real conversation.</p>
+      <div class="grid-process">
+        <div class="process-step process-step--active">
+          <div class="process-num" aria-hidden="true">01</div>
+          <h3 class="subheading">Start With a Conversation</h3>
+          <p class="body-text" style="font-size:var(--t-sm);margin-top:var(--s-1);">Before anything else, we talk directly. You describe what's happening, what's been tried, and what success would actually look like. No pitch deck. No intake form. Just a real conversation.</p>
         </div>
-        <div style="border-top:2px solid rgba(255,255,255,0.12);padding:40px 32px;">
-          <div style="font-size:48px;font-weight:700;color:rgba(255,255,255,0.06);line-height:1;margin-bottom:24px;font-variant-numeric:tabular-nums;">02</div>
-          <h3 style="font-size:18px;font-weight:700;margin:0 0 16px;letter-spacing:-0.01em;">Diagnose Before Prescribing</h3>
-          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.5);margin:0;">Through interviews, observations, and review of existing data, I work to understand the real problem, not the presenting one. Most organizations know something is wrong. Fewer know exactly what.</p>
+        <div class="process-step">
+          <div class="process-num" aria-hidden="true">02</div>
+          <h3 class="subheading">Diagnose Before Prescribing</h3>
+          <p class="body-text" style="font-size:var(--t-sm);margin-top:var(--s-1);">Through interviews, observations, and review of existing data, I work to understand the real problem, not the presenting one. Most organizations know something is wrong. Fewer know exactly what.</p>
         </div>
-        <div style="border-top:2px solid rgba(255,255,255,0.12);padding:40px 32px;">
-          <div style="font-size:48px;font-weight:700;color:rgba(255,255,255,0.06);line-height:1;margin-bottom:24px;font-variant-numeric:tabular-nums;">03</div>
-          <h3 style="font-size:18px;font-weight:700;margin:0 0 16px;letter-spacing:-0.01em;">Design the Engagement</h3>
-          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.5);margin:0;">Together, we define the scope, format, and timeline. Engagements are tailored, not templated. Some are six-week intensive sprints. Others are 18-month partnerships. The work dictates the structure.</p>
+        <div class="process-step">
+          <div class="process-num" aria-hidden="true">03</div>
+          <h3 class="subheading">Design the Engagement</h3>
+          <p class="body-text" style="font-size:var(--t-sm);margin-top:var(--s-1);">Together, we define the scope, format, and timeline. Engagements are tailored, not templated. Some are six-week intensive sprints. Others are 18-month partnerships. The work dictates the structure.</p>
         </div>
-        <div style="border-top:2px solid rgba(255,255,255,0.12);padding:40px 0 40px 32px;">
-          <div style="font-size:48px;font-weight:700;color:rgba(255,255,255,0.06);line-height:1;margin-bottom:24px;font-variant-numeric:tabular-nums;">04</div>
-          <h3 style="font-size:18px;font-weight:700;margin:0 0 16px;letter-spacing:-0.01em;">Work Alongside Your Team</h3>
-          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.5);margin:0;">I'm in the room, leading offsites, coaching leaders weekly, facilitating difficult conversations. The work happens in direct relationship with your people, not from the outside looking in.</p>
+        <div class="process-step">
+          <div class="process-num" aria-hidden="true">04</div>
+          <h3 class="subheading">Work Alongside Your Team</h3>
+          <p class="body-text" style="font-size:var(--t-sm);margin-top:var(--s-1);">I'm in the room, leading offsites, coaching leaders weekly, facilitating difficult conversations. The work happens in direct relationship with your people, not from the outside looking in.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Case Studies -->
-  <section id="work" style="padding:120px 48px;background:#111;">
-    <div style="max-width:1200px;margin:0 auto;">
-      <div style="margin-bottom:80px;">
-        <p style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:0 0 20px;">Selected Work</p>
-        <h2 style="font-size:clamp(36px,4vw,56px);font-weight:700;margin:0;">Case Studies</h2>
+  <section class="section section--card" id="work">
+    <div class="container--wide">
+      <div class="section-head">
+        <p class="eyebrow">Selected Work</p>
+        <h2 class="heading">Case Studies</h2>
       </div>
-      <div style="display:flex;flex-direction:column;gap:0;">
+      <div class="case-list">
 
-        <!-- Case 1 -->
-        <article style="border-top:1px solid rgba(255,255,255,0.1);padding:56px 0;display:grid;grid-template-columns:80px 1fr 1fr;gap:48px;align-items:start;">
-          <div style="font-size:64px;font-weight:700;color:rgba(255,255,255,0.06);line-height:1;font-variant-numeric:tabular-nums;">01</div>
-          <div>
-            <p style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:0 0 20px;">Grant-Making Non-Profit · Executive Team &amp; Manager Development</p>
-            <h3 style="font-size:22px;font-weight:700;margin:0 0 20px;line-height:1.3;">Rebuilding Leadership Alignment After an Unexpected CEO Departure</h3>
-            <p style="font-size:15px;line-height:1.7;color:rgba(255,255,255,0.55);margin:0;">When the founding CEO stepped down unexpectedly, the senior leadership team, drawn from three autonomous program divisions, had never been asked to operate as a unit. With a $2B endowment, a new board chair, and a strategic plan due in six months, the organization needed both a steady hand and a clear path.</p>
-          </div>
-          <div>
-            <p style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(0,102,204,0.7);margin:0 0 20px;">Engagement &amp; Outcome</p>
-            <p style="font-size:15px;line-height:1.7;color:rgba(255,255,255,0.55);margin:0 0 24px;">Willie facilitated a six-month executive alignment series and provided individual coaching to four direct reports navigating new levels of visibility and accountability.</p>
-            <ul style="margin:0;padding:0 0 0 16px;color:rgba(255,255,255,0.7);font-size:14px;line-height:1.8;">
-              <li>Unified strategic framework endorsed unanimously by the board</li>
-              <li>Two senior leaders who had signaled departures chose to stay</li>
-              <li>Interim CEO transitioned to permanent appointment with broad internal confidence</li>
-            </ul>
+        <article class="case-article">
+          <div class="case-grid">
+            <div class="case-num" aria-hidden="true">01</div>
+            <div>
+              <p class="case-tag">Grant-Making Non-Profit · Executive Team &amp; Manager Development</p>
+              <h3 class="subheading">Rebuilding Leadership Alignment After an Unexpected CEO Departure</h3>
+              <p class="body-text">When the founding CEO stepped down unexpectedly, the senior leadership team, drawn from three autonomous program divisions, had never been asked to operate as a unit. With a $2B endowment, a new board chair, and a strategic plan due in six months, the organization needed both a steady hand and a clear path.</p>
+            </div>
+            <div>
+              <p class="case-outcome-tag">Engagement &amp; Outcome</p>
+              <p class="body-text">Willie facilitated a six-month executive alignment series and provided individual coaching to four direct reports navigating new levels of visibility and accountability.</p>
+              <ul class="outcome-list">
+                <li>Unified strategic framework endorsed unanimously by the board</li>
+                <li>Two senior leaders who had signaled departures chose to stay</li>
+                <li>Interim CEO transitioned to permanent appointment with broad internal confidence</li>
+              </ul>
+            </div>
           </div>
         </article>
 
-        <!-- Case 2 -->
-        <article style="border-top:1px solid rgba(255,255,255,0.1);padding:56px 0;display:grid;grid-template-columns:80px 1fr 1fr;gap:48px;align-items:start;">
-          <div style="font-size:64px;font-weight:700;color:rgba(255,255,255,0.06);line-height:1;font-variant-numeric:tabular-nums;">02</div>
-          <div>
-            <p style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:0 0 20px;">Multinational Media Conglomerate · Manager Capability &amp; Leadership Development</p>
-            <h3 style="font-size:22px;font-weight:700;margin:0 0 20px;line-height:1.3;">People Integration After a Culture-Defining Acquisition</h3>
-            <p style="font-size:15px;line-height:1.7;color:rgba(255,255,255,0.55);margin:0;">A major acquisition had joined a legacy broadcast network and a digital-first streaming operation under one holding company. The cultures clashed openly, and attrition among high performers was rising on both sides before the first year was out.</p>
-          </div>
-          <div>
-            <p style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(0,102,204,0.7);margin:0 0 20px;">Engagement &amp; Outcome</p>
-            <p style="font-size:15px;line-height:1.7;color:rgba(255,255,255,0.55);margin:0 0 24px;">An 18-month leadership development program for managers across both legacy organizations, spanning 14 markets, anchored in a shared people philosophy built collaboratively with HR leadership.</p>
-            <ul style="margin:0;padding:0 0 0 16px;color:rgba(255,255,255,0.7);font-size:14px;line-height:1.8;">
-              <li>Voluntary attrition among high performers declined meaningfully</li>
-              <li>Managers reported substantially higher confidence across cultural lines</li>
-              <li>Program became the integration template for the parent company</li>
-            </ul>
+        <article class="case-article">
+          <div class="case-grid">
+            <div class="case-num" aria-hidden="true">02</div>
+            <div>
+              <p class="case-tag">Multinational Media Conglomerate · Manager Capability &amp; Leadership Development</p>
+              <h3 class="subheading">People Integration After a Culture-Defining Acquisition</h3>
+              <p class="body-text">A major acquisition had joined a legacy broadcast network and a digital-first streaming operation under one holding company. The cultures clashed openly, and attrition among high performers was rising on both sides before the first year was out.</p>
+            </div>
+            <div>
+              <p class="case-outcome-tag">Engagement &amp; Outcome</p>
+              <p class="body-text">An 18-month leadership development program for managers across both legacy organizations, spanning 14 markets, anchored in a shared people philosophy built collaboratively with HR leadership.</p>
+              <ul class="outcome-list">
+                <li>Voluntary attrition among high performers declined meaningfully</li>
+                <li>Shared manager competency model adopted across 14 global markets</li>
+                <li>HR leadership cited the program as foundational to cultural integration</li>
+              </ul>
+            </div>
           </div>
         </article>
 
-        <!-- Case 3 -->
-        <article style="border-top:1px solid rgba(255,255,255,0.1);border-bottom:1px solid rgba(255,255,255,0.1);padding:56px 0;display:grid;grid-template-columns:80px 1fr 1fr;gap:48px;align-items:start;">
-          <div style="font-size:64px;font-weight:700;color:rgba(255,255,255,0.06);line-height:1;font-variant-numeric:tabular-nums;">03</div>
-          <div>
-            <p style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:0 0 20px;">Global Hedge Fund · Talent Strategy &amp; Manager Readiness</p>
-            <h3 style="font-size:22px;font-weight:700;margin:0 0 20px;line-height:1.3;">Talent Architecture for a Fund That Grew Faster Than Its Infrastructure</h3>
-            <p style="font-size:15px;line-height:1.7;color:rgba(255,255,255,0.55);margin:0;">Rapid AUM growth had outpaced the fund's management infrastructure. Senior investment professionals were inheriting people-management accountabilities with no structured support; retention risk among junior talent was rising across asset classes.</p>
-          </div>
-          <div>
-            <p style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(0,102,204,0.7);margin:0 0 20px;">Engagement &amp; Outcome</p>
-            <p style="font-size:15px;line-height:1.7;color:rgba(255,255,255,0.55);margin:0 0 24px;">Willie designed a full talent architecture, career tracks, performance frameworks, and a competency model, then led a manager readiness program for 24 portfolio managers and senior analysts.</p>
-            <ul style="margin:0;padding:0 0 0 16px;color:rgba(255,255,255,0.7);font-size:14px;line-height:1.8;">
-              <li>Structured career paths established across four asset classes</li>
-              <li>Managers reported materially higher confidence within 90 days</li>
-              <li>Program expanded to operations and technology teams within the year</li>
-            </ul>
+        <article class="case-article">
+          <div class="case-grid">
+            <div class="case-num" aria-hidden="true">03</div>
+            <div>
+              <p class="case-tag">Global Hedge Fund · Talent Strategy &amp; Manager Readiness</p>
+              <h3 class="subheading">Talent Architecture for a Fund That Grew Faster Than Its Infrastructure</h3>
+              <p class="body-text">Rapid AUM growth had outpaced the fund's management infrastructure. Senior investment professionals were inheriting people-management accountabilities with no structured support; retention risk among junior talent was rising across asset classes.</p>
+            </div>
+            <div>
+              <p class="case-outcome-tag">Engagement &amp; Outcome</p>
+              <p class="body-text">Willie designed a full talent architecture, career tracks, performance frameworks, and a competency model, then led a manager readiness program for 24 portfolio managers and senior analysts.</p>
+              <ul class="outcome-list">
+                <li>Structured career paths established across four asset classes</li>
+                <li>Managers reported materially higher confidence within 90 days</li>
+                <li>Program expanded to operations and technology teams within the year</li>
+              </ul>
+            </div>
           </div>
         </article>
 
@@ -378,137 +916,158 @@
     </div>
   </section>
 
-
   <!-- See Willie in Action -->
-  <section style="padding:96px 48px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);">
-    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:260px 1fr;gap:80px;align-items:center;">
-      <div>
-        <p style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#0066CC;margin:0 0 20px;">Live</p>
-        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.15;margin:0 0 20px;">See Willie in Action</h2>
-        <p style="font-size:16px;line-height:1.7;color:rgba(255,255,255,0.5);margin:0;">8-minute main stage keynote at the Makers Conference on navigating change, identity, and what it takes to lead through both.</p>
-      </div>
-      <div onclick="playVideo(this)" style="position:relative;aspect-ratio:16/9;cursor:pointer;overflow:hidden;background:#111;">
-        <img src="makers-conference-thumbnail.jpg" alt="Willie Jackson keynote at the Makers Conference — The Makers Conference" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;">
-          <div style="width:80px;height:80px;background:#0066CC;border-radius:50%;display:flex;align-items:center;justify-content:center;">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="white"><polygon points="10,7 22,14 10,21"/></svg>
+  <section class="section" style="border-top:1px solid var(--border-faint);">
+    <div class="container--wide">
+      <div class="grid-video">
+        <div class="video-section__text">
+          <p class="eyebrow eyebrow--accent">Live</p>
+          <h2 class="heading">See Willie in Action</h2>
+          <p class="body-text">8-minute main stage keynote at the Makers Conference on navigating change, identity, and what it takes to lead through both.</p>
+        </div>
+        <div class="video-wrap"
+             role="button" tabindex="0"
+             aria-label="Play Willie Jackson keynote at the Makers Conference"
+             onclick="playVideo(this)"
+             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();playVideo(this)}">
+          <img src="makers-conference-thumbnail.jpg" alt="Willie Jackson keynote at the Makers Conference" loading="lazy" decoding="async" />
+          <div class="video-overlay" aria-hidden="true">
+            <div class="video-play-btn">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="white" aria-hidden="true"><polygon points="10,7 22,14 10,21"/></svg>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <script>function playVideo(el){el.innerHTML='<iframe src="https://www.youtube.com/embed/_EeiQZsvK9E?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>';}</script>
-
 
   <!-- From the Stage -->
-  <section aria-label="Willie Jackson speaking and facilitating" style="overflow:hidden;">
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;">
-      <div style="aspect-ratio:4/3;overflow:hidden;">
-        <img src="wj-facilitating-mbs.jpg" alt="Willie Jackson presenting at a conference" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+  <section class="photo-strip" aria-label="Willie Jackson speaking and facilitating">
+    <div class="grid-photos">
+      <div>
+        <img src="wj-facilitating-mbs.jpg" alt="Willie Jackson presenting at a conference" loading="lazy" decoding="async" />
       </div>
-      <div style="aspect-ratio:4/3;overflow:hidden;">
-        <img src="wj-speaking.jpg" alt="Willie Jackson speaking on stage" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+      <div>
+        <img src="wj-speaking.jpg" alt="Willie Jackson speaking on stage" loading="lazy" decoding="async" />
       </div>
-      <div style="aspect-ratio:4/3;overflow:hidden;">
-        <img src="wj-facilitating-san-jose.jpg" alt="Willie Jackson facilitating a workshop" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+      <div>
+        <img src="wj-facilitating-san-jose.jpg" alt="Willie Jackson facilitating a workshop" loading="lazy" decoding="async" />
       </div>
     </div>
   </section>
 
   <!-- Testimonials -->
-  <section id="testimonials" style="padding:96px 48px;background:#0A0A0A;border-top:1px solid rgba(255,255,255,0.1);">
-    <div style="max-width:1200px;margin:0 auto;">
-      <div style="margin-bottom:64px;">
-        <p style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#0066CC;margin:0 0 16px;">From the Field</p>
-        <h2 style="font-size:clamp(32px,4vw,48px);font-weight:700;margin:0;">Selected Testimonials</h2>
+  <section class="section section--alt" id="testimonials" style="border-top:1px solid var(--border);">
+    <div class="container--wide">
+      <div class="section-head">
+        <p class="eyebrow eyebrow--accent">From the Field</p>
+        <h2 class="heading">Selected Testimonials</h2>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;">
-        <div class="testimonial-card">
-          <svg aria-hidden="true" style="width:32px;height:32px;color:#0066CC;margin-bottom:32px;opacity:0.6;" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-          <blockquote style="font-size:17px;line-height:1.7;color:rgba(255,255,255,0.85);margin:0 0 40px;">"Willie has a rare ability to hold a room. We brought him in for a leadership offsite with a team that had never been asked to work together as a unit. He read the dynamics immediately and facilitated us to alignment that shaved years off our timeline."</blockquote>
-          <footer style="border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;">
-            <div style="font-weight:700;font-size:13px;">Chief People Officer</div>
-            <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-top:4px;">Global Technology Company</div>
+      <div class="grid-auto">
+        <article class="testimonial-card">
+          <svg class="testimonial-icon" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+          <blockquote>"Willie has a rare ability to hold a room. We brought him in for a leadership offsite with a team that had never been asked to work together as a unit. He read the dynamics immediately and facilitated us to alignment that shaved years off our timeline."</blockquote>
+          <footer>
+            <div class="testimonial-name">Chief People Officer</div>
+            <div class="testimonial-org">Global Technology Company</div>
           </footer>
-        </div>
-        <div class="testimonial-card">
-          <svg aria-hidden="true" style="width:32px;height:32px;color:#0066CC;margin-bottom:32px;opacity:0.6;" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-          <blockquote style="font-size:17px;line-height:1.7;color:rgba(255,255,255,0.85);margin:0 0 40px;">"Our workforce spans five generations and a dozen countries. Willie navigated that complexity with a fluency I haven't seen from any other facilitator. He found the common ground without flattening the differences."</blockquote>
-          <footer style="border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;">
-            <div style="font-weight:700;font-size:13px;">VP of People</div>
-            <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-top:4px;">Global Consumer Goods Company</div>
+        </article>
+        <article class="testimonial-card">
+          <svg class="testimonial-icon" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+          <blockquote>"Our workforce spans five generations and a dozen countries. Willie navigated that complexity with a fluency I haven't seen from any other facilitator. He found the common ground without flattening the differences."</blockquote>
+          <footer>
+            <div class="testimonial-name">VP of People</div>
+            <div class="testimonial-org">Global Consumer Goods Company</div>
           </footer>
-        </div>
-        <div class="testimonial-card">
-          <svg aria-hidden="true" style="width:32px;height:32px;color:#0066CC;margin-bottom:32px;opacity:0.6;" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-          <blockquote style="font-size:17px;line-height:1.7;color:rgba(255,255,255,0.85);margin:0 0 40px;">"He opened our leadership summit and set the tone for the entire year. Honest, energizing, and immediately actionable. Our team is still referencing that talk six months later."</blockquote>
-          <footer style="border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;">
-            <div style="font-weight:700;font-size:13px;">Head of Talent Development</div>
-            <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-top:4px;">Fortune 500 Financial Services</div>
+        </article>
+        <article class="testimonial-card">
+          <svg class="testimonial-icon" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+          <blockquote>"He opened our leadership summit and set the tone for the entire year. Honest, energizing, and immediately actionable. Our team is still referencing that talk six months later."</blockquote>
+          <footer>
+            <div class="testimonial-name">Head of Talent Development</div>
+            <div class="testimonial-org">Fortune 500 Financial Services</div>
           </footer>
-        </div>
+        </article>
       </div>
     </div>
   </section>
 
   <!-- Quote Banner -->
-  <section style="padding:128px 48px;position:relative;overflow:hidden;">
-    <div aria-hidden="true" style="position:absolute;inset:0;background-image:url(wj-speaking.jpg);background-size:cover;background-position:center 30%;"></div>
-    <div aria-hidden="true" style="position:absolute;inset:0;background:rgba(0,20,60,0.80);"></div>
-    <div style="position:relative;max-width:900px;margin:0 auto;text-align:center;">
-      <svg aria-hidden="true" style="width:56px;height:56px;margin:0 auto 48px;opacity:0.5;" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-      <blockquote style="font-size:clamp(28px,4vw,52px);font-weight:500;line-height:1.2;margin:0;">
+  <section class="quote-banner" aria-label="Willie Jackson quote">
+    <div class="quote-banner__bg" aria-hidden="true"></div>
+    <div class="quote-banner__overlay" aria-hidden="true"></div>
+    <div class="quote-banner__content">
+      <svg class="quote-banner__icon" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+      <blockquote class="quote-banner__text">
         "True transformation doesn't happen in spreadsheets. It happens in the spaces between people."
       </blockquote>
     </div>
   </section>
 
   <!-- Contact Form -->
-  <section id="contact" style="padding:96px 48px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.1);">
-    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start;">
-      <div>
-        <p style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#0066CC;margin:0 0 24px;">Ready to Begin</p>
-        <h2 style="font-size:clamp(36px,5vw,64px);font-weight:700;line-height:1.1;margin:0 0 32px;">Book a Conversation</h2>
-        <p style="color:rgba(255,255,255,0.5);font-size:19px;line-height:1.7;max-width:400px;margin:0;">
-          If your organization is navigating high-stakes change, let's talk. Every engagement starts with a direct conversation—no sales process.
-        </p>
+  <section class="section" id="contact" style="border-top:1px solid var(--border);">
+    <div class="container--wide">
+      <div class="grid-contact">
+        <div class="contact-intro">
+          <p class="eyebrow eyebrow--accent">Ready to Begin</p>
+          <h2 class="heading">Book a Conversation</h2>
+          <p class="lead">If your organization is navigating high-stakes change, let's talk. Every engagement starts with a direct conversation—no sales process.</p>
+          <address style="font-style:normal;">
+            <div class="contact-email">will@j2wtalent.com</div>
+            <div class="contact-note">Response within 1 business day</div>
+          </address>
+        </div>
+        <form id="contact-form" class="contact-form" onsubmit="handleSubmit(event)" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="name" class="field-label">Your Name</label>
+              <input id="name" class="input" type="text" name="name" autocomplete="name" placeholder="Jane Smith" required />
+            </div>
+            <div class="field">
+              <label for="org" class="field-label">Organization</label>
+              <input id="org" class="input" type="text" name="org" autocomplete="organization" placeholder="Acme Corp" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="email" class="field-label">Email</label>
+            <input id="email" class="input" type="email" name="email" autocomplete="email" placeholder="jane@acmecorp.com" required />
+          </div>
+          <div class="field">
+            <label for="message" class="field-label">What's the Challenge?</label>
+            <textarea id="message" class="input" name="message" placeholder="Tell me what you&#x2019;re navigating&#x2026;" rows="5" style="resize:none;" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--accent btn--full">Send Message</button>
+          <div id="form-success" role="status" aria-live="polite" style="display:none;color:var(--accent);font-size:var(--t-sm);letter-spacing:0.05em;">Message sent — I'll be in touch within one business day.</div>
+          <div id="form-error"   role="alert"  aria-live="assertive" style="display:none;color:#ff5555;font-size:var(--t-sm);letter-spacing:0.05em;"></div>
+        </form>
       </div>
-      <form id="contact-form" style="display:flex;flex-direction:column;gap:40px;" onsubmit="handleSubmit(event)" novalidate>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
-          <div>
-            <label for="name" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);display:block;margin-bottom:8px;">Your Name</label>
-            <input id="name" class="input-field" type="text" name="name" autocomplete="name" placeholder="Jane Smith" required />
-          </div>
-          <div>
-            <label for="org" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);display:block;margin-bottom:8px;">Organization</label>
-            <input id="org" class="input-field" type="text" name="org" autocomplete="organization" placeholder="Acme Corp" />
-          </div>
-        </div>
-        <div>
-          <label for="email" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);display:block;margin-bottom:8px;">Email</label>
-          <input id="email" class="input-field" type="email" name="email" autocomplete="email" placeholder="jane@acmecorp.com" required />
-        </div>
-        <div>
-          <label for="message" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);display:block;margin-bottom:8px;">What's the Challenge?</label>
-          <textarea id="message" class="input-field" name="message" placeholder="Tell me what you're navigating..." rows="5" style="resize:none;" required></textarea>
-        </div>
-        <button type="submit" class="btn-blue">Send Message</button>
-        <div id="form-success" role="status" aria-live="polite" style="display:none;color:#0066CC;font-size:14px;letter-spacing:0.05em;">Message sent — I'll be in touch within one business day.</div>
-        <div id="form-error" role="alert" aria-live="assertive" style="display:none;color:#ff5555;font-size:14px;letter-spacing:0.05em;"></div>
-      </form>
     </div>
   </section>
 
   </main>
 
   <!-- Footer -->
-  <footer style="padding:48px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
-    <div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);">© 2026 Jackson Talent Strategies</div>
-    <nav aria-label="Footer navigation" style="display:flex;gap:40px;">
-      <a href="https://www.linkedin.com/in/willieljackson/" class="footer-link" rel="noopener noreferrer" target="_blank">LinkedIn</a>
-      <a href="#contact" class="footer-link">Contact</a>
+  <footer class="footer">
+    <div class="footer__copy">© 2026 Jackson Talent Strategies</div>
+    <nav class="footer__links" aria-label="Footer navigation">
+      <a href="https://www.linkedin.com/in/willieljackson/" class="footer__link" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+      <a href="#contact" class="footer__link">Contact</a>
+    </nav>
+    <nav class="footer-nav" aria-label="Page sections">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#process">Process</a>
+      <a href="#work">Work</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
     </nav>
   </footer>
+
+  <script>
+    function playVideo(el) {
+      el.innerHTML = '<iframe src="https://www.youtube.com/embed/_EeiQZsvK9E?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen title="Willie Jackson keynote at the Makers Conference" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>';
+    }
+  </script>
 
   <script>
     async function handleSubmit(e) {
@@ -523,13 +1082,13 @@
       const message = form.elements.message.value.trim();
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-      if (!name)            return showError(errorEl, 'Please enter your name.');
+      if (!name)              return showError(errorEl, 'Please enter your name.');
       if (!email || !emailOk) return showError(errorEl, 'Please enter a valid email address.');
-      if (!message)         return showError(errorEl, 'Please tell me what you\u2019re navigating.');
+      if (!message)           return showError(errorEl, 'Please tell me what you\u2019re navigating.');
       errorEl.style.display = 'none';
 
       const origText = btn.textContent;
-      btn.textContent = 'Sending…';
+      btn.textContent = 'Sending\u2026';
       btn.disabled = true;
 
       const data = { name, email, message };
@@ -562,21 +1121,22 @@
       el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   </script>
+
   <script>
-    (function() {
+    (function () {
       var sections = document.querySelectorAll('section[id]');
-      var links = document.querySelectorAll('a.nav-link-ba');
+      var links    = document.querySelectorAll('a.nav__link');
       if (!links.length || !sections.length) return;
-      var obs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(e) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
           if (e.isIntersecting) {
-            links.forEach(function(l) { l.classList.remove('active'); });
-            var a = document.querySelector('a.nav-link-ba[href="#' + e.target.id + '"]');
+            links.forEach(function (l) { l.classList.remove('active'); });
+            var a = document.querySelector('a.nav__link[href="#' + e.target.id + '"]');
             if (a) a.classList.add('active');
           }
         });
       }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
-      sections.forEach(function(s) { obs.observe(s); });
+      sections.forEach(function (s) { obs.observe(s); });
     })();
   </script>
 </body>
