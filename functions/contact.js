@@ -52,20 +52,75 @@ export async function onRequestPost(context) {
       'Message:',
       message,
     ].join('\n'),
-    HtmlBody: `
-      <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a;line-height:1.6;">
-        <p style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#999;margin:0 0 4px;">New Contact Form Submission</p>
-        <h2 style="margin:0 0 24px;font-size:20px;font-weight:600;">${esc(name)}${org ? ` &mdash; ${esc(org)}` : ''}</h2>
-        <table style="width:100%;border-collapse:collapse;margin-bottom:24px;font-size:14px;">
-          <tr><td style="padding:8px 0;border-bottom:1px solid #eee;color:#888;width:130px;">Name</td><td style="padding:8px 0;border-bottom:1px solid #eee;">${esc(name)}</td></tr>
-          <tr><td style="padding:8px 0;border-bottom:1px solid #eee;color:#888;">Organization</td><td style="padding:8px 0;border-bottom:1px solid #eee;">${esc(org || '—')}</td></tr>
-          <tr><td style="padding:8px 0;border-bottom:1px solid #eee;color:#888;">Email</td><td style="padding:8px 0;border-bottom:1px solid #eee;"><a href="mailto:${esc(email)}" style="color:#0066CC;">${esc(email)}</a></td></tr>
-        </table>
-        <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#888;margin:0 0 8px;">Message</p>
-        <div style="background:#f7f7f7;padding:16px 20px;border-radius:6px;font-size:15px;line-height:1.7;white-space:pre-wrap;">${esc(message)}</div>
-        <p style="margin-top:28px;font-size:12px;color:#bbb;">Hit Reply to respond directly to ${esc(firstName)}.</p>
-      </div>
-    `,
+    HtmlBody: `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body style="margin:0;padding:0;background:#f0f0f0;">
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#f0f0f0;padding:40px 16px;">
+  <tr><td align="center">
+
+    <table width="560" cellpadding="0" cellspacing="0" role="presentation" style="max-width:560px;width:100%;background:#ffffff;border-radius:3px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+
+      <!-- Header -->
+      <tr>
+        <td style="background:#0066CC;padding:24px 40px;">
+          <p style="margin:0 0 4px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.75);">Jackson Talent Strategies</p>
+          <p style="margin:0;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5);">New Inquiry</p>
+        </td>
+      </tr>
+
+      <!-- Name / Org -->
+      <tr>
+        <td style="padding:36px 40px 0;">
+          <p style="margin:0 0 4px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#0066CC;">From</p>
+          <p style="margin:0;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;color:#0D0D0D;letter-spacing:-0.01em;">${esc(name)}${org ? `<span style="font-weight:400;color:#555;"> &mdash; ${esc(org)}</span>` : ''}</p>
+        </td>
+      </tr>
+
+      <!-- Details table -->
+      <tr>
+        <td style="padding:24px 40px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+            <tr>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#999;padding:10px 0;border-bottom:1px solid #eeeeee;width:120px;">Name</td>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:14px;color:#1a1a1a;padding:10px 0;border-bottom:1px solid #eeeeee;">${esc(name)}</td>
+            </tr>
+            <tr>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#999;padding:10px 0;border-bottom:1px solid #eeeeee;">Organization</td>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:14px;color:#1a1a1a;padding:10px 0;border-bottom:1px solid #eeeeee;">${esc(org || '—')}</td>
+            </tr>
+            <tr>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#999;padding:10px 0;">Email</td>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:14px;padding:10px 0;"><a href="mailto:${esc(email)}" style="color:#0066CC;text-decoration:none;">${esc(email)}</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Message -->
+      <tr>
+        <td style="padding:28px 40px 40px;">
+          <p style="margin:0 0 10px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#0066CC;">Message</p>
+          <div style="background:#f7f7f7;padding:20px 24px;border-radius:3px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:15px;color:#1a1a1a;line-height:1.75;white-space:pre-wrap;">${esc(message)}</div>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr>
+        <td style="padding:18px 40px;background:#fafafa;border-top:1px solid #f0f0f0;">
+          <p style="margin:0;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;color:#bbb;line-height:1.6;">Hit Reply to respond directly to ${esc(firstName)}.</p>
+        </td>
+      </tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>`,
     MessageStream: 'outbound',
   };
 
@@ -86,22 +141,62 @@ export async function onRequestPost(context) {
       'Jackson Talent Strategies',
       'will@j2wtalent.com',
     ].join('\n'),
-    HtmlBody: `
-      <div style="font-family:Georgia,serif;max-width:520px;margin:0 auto;color:#1a1a1a;line-height:1.8;font-size:16px;">
-        <p style="font-size:11px;font-family:sans-serif;letter-spacing:0.15em;text-transform:uppercase;color:#aaa;margin:0 0 36px;">Jackson Talent Strategies</p>
-        <p>Hi ${esc(firstName)},</p>
-        <p>Thank you for reaching out. I've received your message and will get back to you within one business day.</p>
-        <p>If your situation is time-sensitive, feel free to reply to this email directly.</p>
-        <p style="margin-top:40px;">
-          Best,<br>
-          <strong>Willie Jackson</strong><br>
-          <span style="font-family:sans-serif;font-size:14px;color:#555;">Jackson Talent Strategies</span><br>
-          <a href="mailto:will@j2wtalent.com" style="font-family:sans-serif;font-size:14px;color:#0066CC;text-decoration:none;">will@j2wtalent.com</a>
-        </p>
-        <hr style="border:none;border-top:1px solid #eee;margin:40px 0;" />
-        <p style="font-size:11px;font-family:sans-serif;color:#ccc;margin:0;">You're receiving this because you submitted a contact form at j2wtalent.com.</p>
-      </div>
-    `,
+    HtmlBody: `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body style="margin:0;padding:0;background:#f0f0f0;">
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#f0f0f0;padding:40px 16px;">
+  <tr><td align="center">
+
+    <table width="560" cellpadding="0" cellspacing="0" role="presentation" style="max-width:560px;width:100%;background:#ffffff;border-radius:3px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+
+      <!-- Header -->
+      <tr>
+        <td style="background:#0066CC;padding:24px 40px;">
+          <p style="margin:0;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.8);">Jackson Talent Strategies</p>
+        </td>
+      </tr>
+
+      <!-- Body -->
+      <tr>
+        <td style="padding:44px 40px 36px;">
+          <p style="margin:0 0 20px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:16px;color:#1a1a1a;line-height:1.75;">Hi ${esc(firstName)},</p>
+          <p style="margin:0 0 20px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:16px;color:#1a1a1a;line-height:1.75;">Thank you for reaching out. I&rsquo;ve received your message and will get back to you within one business day.</p>
+          <p style="margin:0;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:16px;color:#1a1a1a;line-height:1.75;">If your situation is time-sensitive, feel free to reply to this email directly.</p>
+
+          <!-- Divider -->
+          <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin:36px 0 0;">
+            <tr><td style="border-top:1px solid #e8e8e8;"></td></tr>
+          </table>
+
+          <!-- Signature -->
+          <table cellpadding="0" cellspacing="0" role="presentation" style="margin-top:28px;">
+            <tr>
+              <td>
+                <p style="margin:0 0 5px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:16px;font-weight:700;color:#0D0D0D;letter-spacing:-0.01em;">Willie Jackson</p>
+                <p style="margin:0;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#0066CC;">Jackson Talent Strategies</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr>
+        <td style="padding:18px 40px;background:#fafafa;border-top:1px solid #f0f0f0;">
+          <p style="margin:0;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;color:#bbb;line-height:1.6;">You&rsquo;re receiving this because you submitted a contact form at <a href="https://j2wtalent.com" style="color:#0066CC;text-decoration:none;">j2wtalent.com</a>.</p>
+        </td>
+      </tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>`,
     MessageStream: 'outbound',
   };
 
