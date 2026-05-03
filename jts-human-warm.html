@@ -1154,7 +1154,7 @@
   <!-- Footer -->
   <footer class="footer">
     <a href="/" class="footer__brand">Jackson Talent Strategies</a>
-    <div class="footer__copy">© 2026 Willie Jackson. All rights reserved.</div>
+    <div class="footer__copy">© <span id="footer-year">2026</span> Willie Jackson. All rights reserved.</div>
     <a href="https://www.linkedin.com/in/willieljackson/" class="footer__copy" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">LinkedIn</a>
     <nav class="footer-nav" aria-label="Page sections">
       <a href="#services">Services</a>
@@ -1168,6 +1168,8 @@
   <script>function playVideoHW(el){el.innerHTML='<iframe src="https://www.youtube.com/embed/_EeiQZsvK9E?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;" title="Willie Jackson keynote at the Makers Conference"></iframe>';}</script>
 
   <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
     async function handleSubmit(e) {
       e.preventDefault();
       const form = document.getElementById('contact-form');

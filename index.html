@@ -298,6 +298,12 @@
     .nav__link:hover         { color: rgba(255,255,255,0.8); }
     .nav__link.active        { color: var(--accent); }
     .nav__cta { flex-shrink: 0; }
+    .nav__cta-short { display: inline; }
+    .nav__cta-full  { display: none; }
+    @media (min-width: 480px) {
+      .nav__cta-short { display: none; }
+      .nav__cta-full  { display: inline; }
+    }
 
     section[id] { scroll-margin-top: var(--nav-h); }
 
@@ -689,7 +695,7 @@
         <li><a href="#work"     class="nav__link">Work</a></li>
         <li><a href="#contact"  class="nav__link">Contact</a></li>
       </ul>
-      <a href="#contact" class="btn btn--white btn--sm nav__cta">Book a Conversation</a>
+      <a href="#contact" class="btn btn--white btn--sm nav__cta"><span class="nav__cta-short">Book</span><span class="nav__cta-full">Book a Conversation</span></a>
     </div>
   </nav>
 
@@ -1011,11 +1017,7 @@
         <div class="contact-intro">
           <p class="eyebrow eyebrow--accent">Ready to Begin</p>
           <h2 class="heading">Book a Conversation</h2>
-          <p class="lead">If your organization is navigating high-stakes change, let's talk. Every engagement starts with a direct conversation—no sales process.</p>
-          <address style="font-style:normal;">
-            <div class="contact-email">will@j2wtalent.com</div>
-            <div class="contact-note">Response within 1 business day</div>
-          </address>
+          <p class="lead">If your organization is navigating high-stakes change, let's talk. Every engagement starts with a direct conversation.</p>
         </div>
         <form id="contact-form" class="contact-form" onsubmit="handleSubmit(event)" novalidate>
           <div class="form-row">
@@ -1048,7 +1050,7 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="footer__copy">© 2026 Jackson Talent Strategies</div>
+    <div class="footer__copy">© <span id="footer-year">2026</span> Jackson Talent Strategies</div>
     <nav class="footer__links" aria-label="Footer navigation">
       <a href="https://www.linkedin.com/in/willieljackson/" class="footer__link" rel="noopener noreferrer" target="_blank">LinkedIn</a>
       <a href="#contact" class="footer__link">Contact</a>
@@ -1123,6 +1125,8 @@
   </script>
 
   <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
     (function () {
       var sections = document.querySelectorAll('section[id]');
       var links    = document.querySelectorAll('a.nav__link');
