@@ -16,3 +16,12 @@
   Access-Control-Allow-Origin: https://j2wtalent.com
   Access-Control-Allow-Methods: POST, OPTIONS
   Access-Control-Allow-Headers: Content-Type
+
+# Preview address: never index (Cloudflare's documented pattern; j2wtalent.com is unaffected).
+# Google had indexed j2wstrategies-com.pages.dev and ranked it for Will's name (2026-11-03).
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# Design-variant copies of the homepage (jts-human-warm, jts-modern-precision)
+/jts-*
+  X-Robots-Tag: noindex
