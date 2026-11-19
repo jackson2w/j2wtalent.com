@@ -1,0 +1,28 @@
+---
+layout: base.njk
+title: Contact
+description: "Tell Willie Jackson what’s happening at your organization: what’s changing, what’s been tried, and what success would look like."
+ldKind: contact
+turnstile: true
+scripts: ["/js/contact.js"]
+---
+<header class="page-head">
+  <h1>Tell me what’s happening.</h1>
+  <p class="lede">{{ jts.process[0].body }}</p>
+</header>
+
+<form id="contact-form" class="contact-form" method="post" action="/contact" novalidate
+      toolname="contact_willie_jackson" tooldescription="Send Willie Jackson (Jackson Talent Strategies) a message about a possible engagement. The visitor reviews and sends it.">
+  <div class="field-row">
+    <p class="field"><label for="name">Your name</label><input id="name" type="text" name="name" autocomplete="name" required maxlength="200"></p>
+    <p class="field"><label for="org">Organization <span class="opt">(optional)</span></label><input id="org" type="text" name="org" autocomplete="organization" maxlength="200"></p>
+  </div>
+  <p class="field"><label for="email">Email</label><input id="email" type="email" name="email" autocomplete="email" required maxlength="200"></p>
+  <p class="field"><label for="message">What are you navigating?</label><textarea id="message" name="message" rows="7" required maxlength="5000"></textarea></p>
+  <p class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" type="text" name="website" tabindex="-1" autocomplete="off"></p>
+  <div class="cf-turnstile" data-sitekey="{{ site.turnstileSitekey }}" data-action="contact" data-theme="light"></div>
+  <p class="actions"><button class="btn" type="submit">Send message</button></p>
+  <p class="form-status" role="status" aria-live="polite"></p>
+</form>
+
+<p class="aside">For keynotes and speaking, see <a href="{{ site.author.url }}/speaking/">williejackson.com</a>. How your message is handled: <a href="/privacy/">Privacy</a>.</p>

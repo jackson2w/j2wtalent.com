@@ -1,0 +1,29 @@
+---
+layout: base.njk
+title: Workshops
+description: "Workshops Willie Jackson leads with leadership teams and whole organizations, including My Beautiful Story and Authenticity in Action."
+ldKind: collection
+---
+<header class="page-head">
+  <h1>Workshops</h1>
+  <p class="lede">{{ jts.workshopsIntro }}</p>
+</header>
+
+<div class="workshop-index">
+  {%- for slug, w in workshops.pages %}
+  <article class="workshop-card">
+    <h2>{{ w.title }}</h2>
+    <p>{{ w.lede | stripTags }}</p>
+  </article>
+  {%- endfor %}
+</div>
+
+{% include "staff.njk" %}
+
+<section aria-labelledby="also-h">
+  <h2 id="also-h">Also available</h2>
+  <ul class="workshop-list">
+    {%- for w in workshops.list %}{% if not w.slug %}<li><span>{{ w.title }}</span></li>{% endif %}{% endfor %}
+  </ul>
+  <p class="aside">Ask about any of these when you <a href="/contact/">get in touch</a>.</p>
+</section>

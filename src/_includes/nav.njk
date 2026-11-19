@@ -1,0 +1,6 @@
+<a class="wordmark" href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>Jackson Talent Strategies</a>
+<nav class="site-nav" aria-label="Primary">
+  {%- for n in site.nav %}
+  <a href="{{ n.url }}"{% if page.url == n.url %} aria-current="page"{% elif page.url and page.url.startsWith(n.url) %} aria-current="true"{% endif %}>{{ n.label }}</a>
+  {%- endfor %}
+</nav>

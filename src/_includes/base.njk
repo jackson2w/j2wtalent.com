@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+<head>
+{% include "head.njk" %}
+  <link rel="stylesheet" href="{{ '/css/fonts.css' | fp }}">
+  <link rel="stylesheet" href="{{ '/css/starter.css' | fp }}">
+  <link rel="stylesheet" href="{{ '/css/grt.css' | fp }}">
+  <link rel="stylesheet" href="{{ '/css/style.css' | fp }}">
+  {%- for s in scripts or [] %}
+  <script src="{{ s | fp }}" defer data-cfasync="false"></script>
+  {%- endfor %}
+  {%- if turnstile %}
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer data-cfasync="false"></script>
+  {%- endif %}
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-head" data-pagefind-ignore>{% include "nav.njk" %}</header>
+<main id="main"{% if mainClass %} class="{{ mainClass }}"{% endif %}>
+{%- if page.url != "/" and not hideCrumbs %}
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li>{% for c in breadcrumbs or [] %}<li><a href="{{ c.url }}">{{ c.name }}</a></li>{% endfor %}<li aria-current="page">{{ title }}</li></ol></nav>
+{%- endif %}
+{{ content | safe }}
+</main>
+<footer class="site-foot" data-pagefind-ignore>{% include "footer.njk" %}</footer>
+</body>
+</html>

@@ -1,0 +1,5 @@
+<ul class="workshop-list">
+  {%- for w in workshops.list %}{% if not except or w.slug != except %}
+  <li><span>{{ w.title }}</span></li>
+  {%- endif %}{% endfor %}
+</ul>

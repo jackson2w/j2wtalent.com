@@ -1,0 +1,67 @@
+---
+layout: base.njk
+title: Jackson Talent Strategies
+description: "Willie Jackson, talent strategist and facilitator, works with executives and HR leaders on the human side of high-stakes change, leadership and AI."
+ldKind: home
+mainClass: home
+---
+<section class="hero">
+  <div class="hero-copy">
+    <h1>Your people are navigating more change than your systems were built for. <span class="turn">I help them lead through&nbsp;it.</span></h1>
+    <p class="lede">I’m Willie Jackson, a talent strategist and facilitator who works with executives and HR leaders on the human side of high-stakes change.</p>
+    <p class="actions"><a class="btn" href="/contact/">Start a conversation</a></p>
+  </div>
+  <figure class="hero-photo">
+    <img src="/img/wj-facilitating-nve-room.jpg" alt="Willie Jackson leading My Beautiful Story for a room of seated participants, in front of a lit diamond-pattern backdrop" loading="eager" fetchpriority="high" sizes="(min-width: 60rem) 36vw, 100vw">
+  </figure>
+</section>
+
+<p class="clients">I’ve worked with leaders at {% for c in jts.clients %}{% if loop.last %}and {{ c }}.{% else %}{{ c }}, {% endif %}{% endfor %}</p>
+
+{% include "staff.njk" %}
+
+<section class="services" aria-labelledby="services-h">
+  <h2 id="services-h">What I do</h2>
+  <div class="service-list">
+    {%- for s in jts.services %}
+    <article class="service">
+      <h3><a href="/services/#{{ s.slug }}">{{ s.title }}</a></h3>
+      <p>{{ s.body }}</p>
+    </article>
+    {%- endfor %}
+  </div>
+</section>
+
+<section class="process" aria-labelledby="process-h">
+  <h2 id="process-h">How an engagement runs</h2>
+  {% include "score.njk" %}
+</section>
+
+<section class="workshops" aria-labelledby="workshops-h">
+  <h2 id="workshops-h"><a href="/workshops/">Workshops</a></h2>
+  <p class="section-intro">{{ jts.workshopsIntro }}</p>
+  {% include "workshop-list.njk" %}
+</section>
+
+<section class="work-teaser" aria-labelledby="work-h">
+  <h2 id="work-h"><a href="/work/">Selected work</a></h2>
+  <ul class="case-links">
+    {%- for c in jts.cases %}
+    <li><a href="/work/#{{ c.slug }}">{{ c.title }}</a> <span class="case-meta">{{ c.sector }}</span></li>
+    {%- endfor %}
+  </ul>
+</section>
+
+{% include "staff.njk" %}
+
+{% set t = jts.testimonials[0] %}
+<figure class="voice voice-lead">
+  <blockquote><p>“{{ t.quote }}”</p></blockquote>
+  <figcaption>{{ t.who }}, {{ t.org }}</figcaption>
+</figure>
+
+<section class="contact-prompt" aria-labelledby="contact-h">
+  <h2 id="contact-h">Tell me what’s happening.</h2>
+  <p>{{ jts.process[0].body }}</p>
+  <p class="actions"><a class="btn" href="/contact/">Start a conversation</a></p>
+</section>

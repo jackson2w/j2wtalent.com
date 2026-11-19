@@ -1,0 +1,53 @@
+---
+layout: base.njk
+pagination:
+  data: workshops.pages
+  size: 1
+  alias: slug
+# Disabled 2026-11-19 (Will): the workshop landing pages are being reimagined. Keep the template; build nothing.
+permalink: false
+eleventyExcludeFromCollections: true
+breadcrumbs: [{ name: "Workshops", url: "/workshops/" }]
+eleventyComputed:
+  title: "{{ workshops.pages[slug].title }}"
+  description: "{{ workshops.pages[slug].lede | stripTags }}"
+---
+{%- set w = workshops.pages[slug] %}
+{%- set photo = { "my-beautiful-story": ["/img/wj-facilitating-mbs.jpg", "Willie Jackson leading a My Beautiful Story session in a ballroom, the workshop title on the screen behind him"], "authenticity-in-action": ["/img/wj-speaking.jpg", "Willie Jackson speaking to a seated audience"] }[slug] %}
+<article class="workshop">
+  <header class="page-head">
+    <h1>{{ w.title }}</h1>
+    <p class="lede">{{ w.lede | safe }}</p>
+  </header>
+  <figure class="workshop-photo"><img src="{{ photo[0] }}" alt="{{ photo[1] }}" loading="eager" fetchpriority="high" sizes="(min-width: 72rem) 72rem, 100vw"></figure>
+  <div class="prose">
+    {%- for p in w.paras %}
+    <p>{{ p }}</p>
+    {%- endfor %}
+  </div>
+
+  {% include "staff.njk" %}
+
+  <section class="objectives" aria-labelledby="obj-h">
+    <h2 id="obj-h">What participants take away</h2>
+    <ul>{% for o in w.objectives %}<li>{{ o | safe }}</li>{% endfor %}</ul>
+  </section>
+
+  {%- if w.impact %}
+  <figure class="voice voice-lead impact">
+    <blockquote>{% for p in w.impact.paras %}<p>{% if loop.first %}“{% endif %}{{ p }}{% if loop.last %}”{% endif %}</p>{% endfor %}</blockquote>
+    <figcaption>{{ w.impact.name }}, {{ w.impact.role }}</figcaption>
+  </figure>
+  {%- endif %}
+
+  <section class="contact-prompt" aria-labelledby="contact-h">
+    <h2 id="contact-h">Bring {{ w.title }} to your team.</h2>
+    <p>Tell me about the group, the moment it’s in, and what you’d like to be different afterwards.</p>
+    <p class="actions"><a class="btn" href="/contact/">Start a conversation</a></p>
+  </section>
+
+  <nav class="more-workshops" aria-labelledby="more-h">
+    <h2 id="more-h">Other workshops</h2>
+    {% set except = slug %}{% include "workshop-list.njk" %}
+  </nav>
+</article>

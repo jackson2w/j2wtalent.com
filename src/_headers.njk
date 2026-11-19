@@ -1,0 +1,51 @@
+---
+permalink: /_headers
+eleventyExcludeFromCollections: true
+---
+# Generated from src/_headers.njk: site.launched (src/_globals/site.js) is the one launch switch.
+# specification.website security headers (Will's decisions 2026-11-05). Cloudflare JOINS duplicate headers from
+# overlapping rules with commas, so each header lives in exactly one matching rule (or is detached with "! Name").
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+{#- j2wtalent: HSTS keeps the live site's includeSubDomains + preload (already served before the rebuild). The Pages
+    project auto-injects Cloudflare Web Analytics, so its two hosts are always allowed (as on the live site since 11-19). -#}
+{%- set cspBase = "default-src 'self'; script-src 'self' 'inline-speculation-rules' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" %}
+  Content-Security-Policy: {{ cspBase | safe }}; require-trusted-types-for 'script'
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-site
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Permitted-Cross-Domain-Policies: none
+{%- if not site.launched %}
+  X-Robots-Tag: noindex, nofollow
+{%- endif %}
+
+# Contact: Cloudflare Turnstile's script and frame. No Trusted Types here: the real widget sets a <script>'s text,
+# which require-trusted-types-for blocks (williejackson.com launch night, 2026-11-18). The test sitekey never runs it.
+/contact/
+  ! Content-Security-Policy
+  Content-Security-Policy: {{ cspBase | replace("script-src 'self'", "script-src 'self' 'wasm-unsafe-eval' https://challenges.cloudflare.com") | replace("object-src", "frame-src https://challenges.cloudflare.com; object-src") | safe }}
+
+# The project's pages.dev address is never indexed (Google ranked it for Will's name, 2026-11-03).
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# Share images must load on LinkedIn, X, Messages etc.
+/img/og/*
+  ! Cross-Origin-Resource-Policy
+  Cross-Origin-Resource-Policy: cross-origin
+{%- if site.launched %}
+
+# Caching (held until launch, Will 2026-11-05). CSS URLs carry a content hash (the | fp filter), so immutable is safe.
+# Images and fonts: never replace a file in place under the same name; rename it (preferences §10).
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+/icons/*
+  Cache-Control: public, max-age=86400
+{%- endif %}

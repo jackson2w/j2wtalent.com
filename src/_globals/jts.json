@@ -1,0 +1,140 @@
+{
+  "services": [
+    {
+      "title": "Organizational change facilitation",
+      "body": "Guiding executive teams and entire workforces through complex transitions with clarity and alignment.",
+      "slug": "organizational-change-facilitation"
+    },
+    {
+      "title": "Leadership development",
+      "body": "Equipping leaders with the emotional intelligence and strategic frameworks they need in high-pressure environments.",
+      "slug": "leadership-development"
+    },
+    {
+      "title": "AI upskilling and talent strategy",
+      "body": "Redesigning how you attract, develop, and enable people, including how your managers lead alongside AI, when the old playbooks no longer apply.",
+      "slug": "ai-upskilling-and-talent-strategy"
+    }
+  ],
+  "process": [
+    {
+      "title": "Start with a conversation",
+      "body": "You describe what’s happening, what’s been tried, and what success would actually look like."
+    },
+    {
+      "title": "Diagnose before prescribing",
+      "body": "Interviews, observation, and your existing data, to understand the real problem rather than the presenting one."
+    },
+    {
+      "title": "Design the engagement",
+      "body": "Scope, format, and timeline, tailored rather than templated. Some engagements are six-week sprints; others are 18-month partnerships."
+    },
+    {
+      "title": "Work alongside your team",
+      "body": "I’m in the room: leading offsites, coaching leaders weekly, facilitating difficult conversations."
+    }
+  ],
+  "cases": [
+    {
+      "sector": "Grant-making nonprofit",
+      "focus": "Executive team and manager development",
+      "title": "Rebuilding leadership alignment after an unexpected CEO departure",
+      "situation": "A senior team drawn from three autonomous divisions had never operated as a unit. With a $2B endowment, a new board chair, and a strategic plan due in six months, the organization needed a steady hand and a clear path.",
+      "engagement": "A six-month executive alignment series, plus individual coaching for four direct reports stepping into new visibility.",
+      "outcomes": [
+        "Strategic framework endorsed unanimously by the board",
+        "Two senior leaders who had signaled departures chose to stay",
+        "Interim CEO appointed permanently with broad internal confidence"
+      ],
+      "slug": "grant-making-nonprofit"
+    },
+    {
+      "sector": "Multinational media company",
+      "focus": "Manager capability and leadership development",
+      "title": "People integration after a culture-defining acquisition",
+      "situation": "An acquisition joined a legacy broadcast network and a digital-first streaming operation. The cultures clashed openly, and high-performer attrition was rising on both sides within the first year.",
+      "engagement": "An 18-month leadership program for managers across both organizations in 14 markets, anchored in a shared people philosophy built with HR leadership.",
+      "outcomes": [
+        "Voluntary attrition among high performers declined meaningfully",
+        "Shared manager competency model adopted across 14 markets",
+        "HR leadership cited the program as foundational to integration"
+      ],
+      "slug": "multinational-media-company"
+    },
+    {
+      "sector": "Global hedge fund",
+      "focus": "Talent strategy and manager readiness",
+      "title": "Talent architecture for a fund that outgrew its infrastructure",
+      "situation": "Rapid AUM growth outpaced management infrastructure. Investment professionals inherited people-management duties with no structured support, and junior retention risk was rising.",
+      "engagement": "A full talent architecture (career tracks, performance frameworks, a competency model) and a manager readiness program for 24 portfolio managers and senior analysts.",
+      "outcomes": [
+        "Structured career paths across four asset classes",
+        "Managers reported materially higher confidence within 90 days",
+        "Program expanded to operations and technology within the year"
+      ],
+      "slug": "global-hedge-fund"
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "Willie has a rare ability to hold a room. We brought him in for a leadership offsite with a team that had never been asked to work together as a unit. He read the dynamics immediately and facilitated us to alignment that shaved years off our timeline.",
+      "who": "Chief People Officer",
+      "org": "Global Technology Company"
+    },
+    {
+      "quote": "Our workforce spans five generations and a dozen countries. Willie navigated that complexity with a fluency I haven't seen from any other facilitator. He found the common ground without flattening the differences.",
+      "who": "VP of People",
+      "org": "Global Consumer Goods Company"
+    },
+    {
+      "quote": "He opened our leadership summit and set the tone for the entire year. Honest, energizing, and immediately actionable. Our team is still referencing that talk six months later.",
+      "who": "Head of Talent Development",
+      "org": "Fortune 500 Financial Services"
+    }
+  ],
+  "clients": [
+    "Google",
+    "Nike",
+    "Pfizer",
+    "Meta",
+    "Verizon",
+    "Bloomberg",
+    "Wharton",
+    "Johnson & Johnson",
+    "Hilton",
+    "Strava",
+    "Chime",
+    "Mailchimp",
+    "Braze",
+    "Mizuho",
+    "Wellington",
+    "Man Group"
+  ],
+  "workshopsIntro": "Sessions I run with leadership teams and whole organizations, on their own or inside a longer engagement.",
+  "formats": {
+    "source": "williejackson.com/about/consulting/ (Will's wording, fetched 2026-11-03)",
+    "items": [
+      {
+        "name": "Interactive Keynotes",
+        "text": "High-energy, bespoke sessions that leave a lasting impact."
+      },
+      {
+        "name": "Fireside Chats",
+        "text": "Fun, engaging dialogue with one or more of your executives."
+      },
+      {
+        "name": "Team Offsites",
+        "text": "A change of scenery can change everything for your team."
+      },
+      {
+        "name": "Workshops",
+        "text": "Deep-dives designed for growth and skill acquisition."
+      },
+      {
+        "name": "Advisory",
+        "text": "I’ve probably seen what you’re dealing with. Let’s talk."
+      }
+    ]
+  },
+  "_source": "Copy from the live j2wtalent.com (Replit build), ported 2026-10-23; cases, testimonials and clients confirmed real and cleared by Will 2026-11-19."
+}

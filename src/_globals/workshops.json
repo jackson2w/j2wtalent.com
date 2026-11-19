@@ -1,0 +1,65 @@
+{
+  "source": "Will's wording, verbatim, from williejackson.com/consulting/ (fetched 2026-11-03; copied from the mockups repo 2026-11-19).",
+  "list": [
+    {
+      "title": "Moving through Productive Discomfort"
+    },
+    {
+      "title": "Communication Across Differences"
+    },
+    {
+      "title": "Activating Vulnerability"
+    },
+    {
+      "title": "Authenticity in Action",
+      "slug": "authenticity-in-action"
+    },
+    {
+      "title": "My Beautiful Story",
+      "slug": "my-beautiful-story"
+    }
+  ],
+  "pages": {
+    "my-beautiful-story": {
+      "title": "My Beautiful Story",
+      "lede": "My Beautiful Story is a storytelling workshop designed to deepen trust and connection.",
+      "paras": [
+        "Through a series of carefully crafted prompts, participants thoughtfully explore how they came to be the person they are, with surprising relevance to their professional identities.",
+        "People regularly share more deeply and personally than they typically would in professional settings, which deepens even longstanding professional relationships.",
+        "The result is a profound shift in how people perceive one another, strengthening cohesion in ways that conventional team-building activities rarely achieve."
+      ],
+      "objectives": [
+        "Develop skills to <strong>listen deeply and respond empathetically</strong>",
+        "Recognize the <strong>universal human experiences</strong> that connect us",
+        "<strong>Create psychological safety</strong> that enables authentic self-expression",
+        "<strong>Transform workplace connections</strong> from transactional to meaningful",
+        "Apply storytelling techniques that <strong>reveal personal values and motivations</strong>"
+      ],
+      "impact": {
+        "paras": [
+          "Just wanted to drop you a line of gratitude. The session yesterday was extremely powerful both for our team and for me personally.",
+          "It’s one thing to hear you talk about the program on our calls but going through it with my colleagues was an opening experience mentally, physically and maybe even spiritually.",
+          "Quite simply, thank you for the moving experience. I can’t wait to partner on future programs and adventures!"
+        ],
+        "name": "Director of HR",
+        "role": "Jan 2025"
+      }
+    },
+    "authenticity-in-action": {
+      "title": "Authenticity in Action",
+      "lede": "The <strong>Authenticity in Action</strong> workshop explores how authenticity manifests not just as an abstract value, but as a practical choice made in everyday workplace moments.",
+      "paras": [
+        "Participants will discover how seemingly small decisions—speaking a difficult truth, acknowledging a mistake, or expressing genuine appreciation—create ripple effects that transform both interpersonal connectivity and organizational culture. Through evidence-based frameworks and real-world examples, attendees will gain concrete strategies for identifying pivotal moments where authentic choices matter most.",
+        "Building on the understanding that authenticity requires both awareness and courage, this workshop bridges the gap between knowing and doing. We’ll examine the three levels of impact authentic actions create—on self, relationships, and culture—while providing practical tools for overcoming the most common barriers to authentic expression in professional settings.",
+        "Participants will leave equipped to transform their workplace interactions through small, intentional choices that align their external actions with their internal values."
+      ],
+      "objectives": [
+        "Identify everyday workplace moments that present opportunities for authentic action and understand how these small choices compound over time",
+        "Apply the three-question framework to formulate responses that balance honesty with empathy and professionalism",
+        "Distinguish between genuine authenticity and unfiltered self-expression in professional contexts",
+        "Implement specific strategies for building momentum through consistent authentic choices despite organizational resistance",
+        "Evaluate the ripple effects of authentic actions and measure their impact on team trust, psychological safety, and cultural norms"
+      ]
+    }
+  }
+}

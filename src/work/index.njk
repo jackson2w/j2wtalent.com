@@ -1,0 +1,40 @@
+---
+layout: base.njk
+title: Selected work
+description: "Three engagements: leadership alignment after a CEO departure, people integration after an acquisition, and talent architecture for a fast-growing fund."
+---
+<header class="page-head">
+  <h1>Selected work</h1>
+  <p class="lede">Client names stay private. The situations are real.</p>
+</header>
+
+{%- for c in jts.cases %}
+<article class="case" id="{{ c.slug }}" aria-labelledby="{{ c.slug }}-h">
+  <header class="case-head">
+    <h2 id="{{ c.slug }}-h">{{ c.title }}</h2>
+    <p class="case-meta">{{ c.sector }}. {{ c.focus }}.</p>
+  </header>
+  <dl class="case-body">
+    <div><dt>The situation</dt><dd>{{ c.situation }}</dd></div>
+    <div><dt>What we did</dt><dd>{{ c.engagement }}</dd></div>
+    <div><dt>What changed</dt><dd><ul>{% for o in c.outcomes %}<li>{{ o }}</li>{% endfor %}</ul></dd></div>
+  </dl>
+</article>
+{%- endfor %}
+
+{% include "staff.njk" %}
+
+<section class="voices" aria-labelledby="voices-h">
+  <h2 id="voices-h">What clients say</h2>
+  {%- for t in jts.testimonials %}
+  <figure class="voice{% if loop.first %} voice-lead{% endif %}">
+    <blockquote><p>“{{ t.quote }}”</p></blockquote>
+    <figcaption>{{ t.who }}, {{ t.org }}</figcaption>
+  </figure>
+  {%- endfor %}
+</section>
+
+<section class="clients-full" aria-labelledby="clients-h">
+  <h2 id="clients-h">Organizations I’ve worked with</h2>
+  <ul class="client-list">{% for c in jts.clients %}<li>{{ c }}</li>{% endfor %}</ul>
+</section>

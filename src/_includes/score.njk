@@ -1,0 +1,6 @@
+{#- The four-step process on a staff: four notes rising across time (the Ensemble motif). -#}
+<ol class="score">
+  {%- for p in jts.process %}
+  <li class="note-{{ loop.index }}"><span class="notehead" aria-hidden="true"></span><h3>{{ p.title }}</h3><p>{{ p.body }}</p></li>
+  {%- endfor %}
+</ol>

@@ -1,0 +1,42 @@
+---
+layout: base.njk
+title: Services
+description: "Organizational change facilitation, leadership development, and AI upskilling and talent strategy, scoped to your situation and delivered by Willie Jackson himself."
+---
+<header class="page-head">
+  <h1>Services</h1>
+  <p class="lede">Tailored rather than templated. Some engagements are six-week sprints; others are 18-month partnerships. Either way, I’m the one in the room.</p>
+</header>
+
+<div class="service-detail">
+  {%- for s in jts.services %}
+  <section id="{{ s.slug }}" aria-labelledby="{{ s.slug }}-h">
+    <h2 id="{{ s.slug }}-h">{{ s.title }}</h2>
+    <p>{{ s.body }}</p>
+  </section>
+  {%- endfor %}
+</div>
+
+{% include "staff.njk" %}
+
+<section class="process" aria-labelledby="process-h">
+  <h2 id="process-h">How an engagement runs</h2>
+  {% include "score.njk" %}
+</section>
+
+{% include "staff.njk" %}
+
+<section class="formats" aria-labelledby="formats-h">
+  <h2 id="formats-h">Ways we can work together</h2>
+  <dl>
+    {%- for f in jts.formats.items %}
+    <div><dt>{% if f.name == "Workshops" %}<a href="/workshops/">{{ f.name }}</a>{% elif f.name == "Interactive Keynotes" %}<a href="{{ site.author.url }}/speaking/">{{ f.name }}</a>{% else %}{{ f.name }}{% endif %}</dt><dd>{{ f.text }}</dd></div>
+    {%- endfor %}
+  </dl>
+</section>
+
+<section class="contact-prompt" aria-labelledby="contact-h">
+  <h2 id="contact-h">Not sure which fits?</h2>
+  <p>{{ jts.process[0].body }}</p>
+  <p class="actions"><a class="btn" href="/contact/">Start a conversation</a></p>
+</section>
