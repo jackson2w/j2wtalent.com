@@ -25,6 +25,9 @@ export default {
   ],
   fontExtraText: "“”‘’…·",
   analyticsToken: null,
+  // The j2wtalent.com zone injects Cloudflare Web Analytics itself (automatic setup, seen live 2026-11-19), so the
+  // privacy page must disclose it even though the site sets no token.
+  analyticsZoneInjected: true,
   ai: { search: "yes", aiInput: "yes", aiTrain: "no" },
   nav: [
     { label: "Services", url: "/services/" },

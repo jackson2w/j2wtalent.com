@@ -8,6 +8,8 @@ description: "What this site collects (only what you send through the contact fo
     worded as on williejackson.com's draft (2026-11-18). Checked 2026-11-19: Postmark server j2wtalent.com (19088998)
     has open and link tracking off. If the site adds anything that collects data, update this page and
     site.privacy.updated in the same change. -#}
+{#- email_off: the zone's Email Address Obfuscation rewrites mailto links and its decoder is blocked by Trusted Types
+    (live audit 2026-11-19); Cloudflare skips anything between these comments. -#}
 {%- set pv = site.privacy -%}
 <article class="privacy prose">
 <header class="page-head">
@@ -15,7 +17,7 @@ description: "What this site collects (only what you send through the contact fo
   <p><time datetime="{{ pv.updated }}">Last updated {{ pv.updated | readablePrivacyDate }}</time></p>
 </header>
 
-<p>{{ site.name }} is my consulting practice, and this is its website. Questions about this page or about your data go to <a href="mailto:{{ pv.contact }}">{{ pv.contact }}</a>.</p>
+<p>{{ site.name }} is my consulting practice, and this is its website. Questions about this page or about your data go to <!--email_off--><a href="mailto:{{ pv.contact }}">{{ pv.contact }}</a><!--/email_off-->.</p>
 
 <h2>The short version</h2>
 <p>This site sets no cookies, shows no ads, and does not track you, build a profile of you or sell anything about you. The only personal information it collects is what you choose to send me through the contact form.</p>
@@ -24,16 +26,16 @@ description: "What this site collects (only what you send through the contact fo
 <p><strong>Hosting.</strong> The site is served by Cloudflare. Like any web host, Cloudflare’s servers see the technical details of each request, such as your IP address, browser and the page you asked for, in order to deliver the page and protect the site from attacks. Cloudflare handles that data under <a href="https://www.cloudflare.com/privacypolicy/">its own privacy policy</a>.</p>
 <p><strong>Contact form.</strong> When you send a message, your name, organization (if you give one), email address and message are emailed to me through Postmark, an email delivery service. Postmark keeps a copy for 45 days and then deletes it, under <a href="https://postmarkapp.com/privacy-policy">its privacy policy</a>; its open and link tracking are turned off. The message then stays in my inbox for as long as it’s useful to our conversation. Sending a message doesn’t sign you up for anything, and I don’t share what you send.</p>
 <p><strong>Spam check.</strong> The contact form uses Cloudflare Turnstile to tell people from bots. It sets no cookies; Cloudflare processes signals from your browser to make that check, under its <a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile privacy addendum</a>.</p>
-{%- if site.analyticsToken %}
+{%- if site.analyticsToken or site.analyticsZoneInjected %}
 <p><strong>Visit counts.</strong> The site uses Cloudflare Web Analytics to count visits and measure how fast pages load. It records the page you visited (without anything after a "?" in the address), the site you came from, your browser and device type, your country, and page-speed timings. It uses no cookies or other storage on your device, does not fingerprint you, and does not follow you across other websites. Cloudflare keeps the full detail for 7 days, then keeps a reduced summary of about a tenth of it; I can see six months of it.</p>
 {%- endif %}
-<p>Fonts, images and scripts all come from this site itself, except the spam check on the contact page, so no other company is contacted when you read a page.</p>
+<p>Fonts, images and scripts all come from this site itself, apart from Cloudflare’s visit counter and the spam check on the contact page.</p>
 
 <h2>Why</h2>
-<p>To deliver the site and keep it secure, and to answer you when you write. Under European data protection law, the basis for this is legitimate interest, and for your message, the steps you asked me to take before we work together.</p>
+<p>To deliver the site and keep it secure, to understand in total numbers how many people visit and how quickly pages load, and to answer you when you write. Under European data protection law, the basis for this is legitimate interest, and for your message, the steps you asked me to take before we work together.</p>
 
 <h2>Your rights</h2>
-<p>You can ask what I hold about you, ask for it to be corrected or deleted, or object to it being used. Email <a href="mailto:{{ pv.contact }}">{{ pv.contact }}</a>; I’ll also help you make a request to Cloudflare or Postmark. If you are in the EU or UK, you can also complain to your local data protection authority.</p>
+<p>You can ask what I hold about you, ask for it to be corrected or deleted, or object to it being used. Email <!--email_off--><a href="mailto:{{ pv.contact }}">{{ pv.contact }}</a><!--/email_off-->; I’ll also help you make a request to Cloudflare or Postmark. If you are in the EU or UK, you can also complain to your local data protection authority.</p>
 
 <h2>Changes</h2>
 <p>If any of this changes, this page will be updated and the date at the top will change with it.</p>
