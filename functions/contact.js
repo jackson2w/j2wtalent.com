@@ -94,14 +94,64 @@ export async function onRequestPost(context) {
     ].join('\n'),
     HtmlBody: `<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /></head>
-<body style="margin:0;padding:24px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;">
-<div style="max-width:560px;">
-<p style="margin:0;font-size:18px;font-weight:600;">${esc(name)}</p>
-${org ? `<p style="margin:0;">${esc(org)}</p>` : ''}
-<p style="margin:0 0 24px;"><a href="mailto:${esc(email)}">${esc(email)}</a></p>
-<div style="white-space:pre-wrap;">${esc(message)}</div>
-</div>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body style="margin:0;padding:0;">
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="padding:40px 16px;">
+  <tr><td align="center">
+
+    <table width="560" cellpadding="0" cellspacing="0" role="presentation" style="max-width:560px;width:100%;background:#ffffff;border-radius:3px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+
+      <!-- Header -->
+      <tr>
+        <td align="center" style="background:#0066CC;padding:24px 40px;text-align:center;">
+          <p style="margin:0 0 4px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.75);">Jackson Talent Strategies</p>
+          <p style="margin:0;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5);">New Inquiry</p>
+        </td>
+      </tr>
+
+      <!-- Name / Org -->
+      <tr>
+        <td style="padding:36px 40px 0;">
+          <p style="margin:0 0 4px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#0066CC;">From</p>
+          <p style="margin:0;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;color:#0D0D0D;letter-spacing:-0.01em;">${esc(name)}${org ? `<span style="font-weight:400;color:#555;"> &mdash; ${esc(org)}</span>` : ''}</p>
+        </td>
+      </tr>
+
+      <!-- Details table -->
+      <tr>
+        <td style="padding:24px 40px 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+            <tr>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#999;padding:10px 0;border-bottom:1px solid #eeeeee;width:120px;">Name</td>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:14px;color:#1a1a1a;padding:10px 0;border-bottom:1px solid #eeeeee;">${esc(name)}</td>
+            </tr>
+            <tr>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#999;padding:10px 0;border-bottom:1px solid #eeeeee;">Organization</td>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:14px;color:#1a1a1a;padding:10px 0;border-bottom:1px solid #eeeeee;">${esc(org || '—')}</td>
+            </tr>
+            <tr>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#999;padding:10px 0;">Email</td>
+              <td style="font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:14px;padding:10px 0;"><a href="mailto:${esc(email)}" style="color:#0066CC;text-decoration:none;">${esc(email)}</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Message -->
+      <tr>
+        <td style="padding:28px 40px 40px;">
+          <p style="margin:0 0 10px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#0066CC;">Message</p>
+          <div style="background:#f7f7f7;padding:20px 24px;border-radius:3px;font-family:'Space Grotesk',Arial,Helvetica,sans-serif;font-size:15px;color:#1a1a1a;line-height:1.75;white-space:pre-wrap;">${esc(message)}</div>
+        </td>
+      </tr>
+
+    </table>
+  </td></tr>
+</table>
 </body>
 </html>`,
     MessageStream: 'outbound',
