@@ -191,7 +191,16 @@ section > h2 { font-size: var(--grt-step-3); line-height: var(--grt-step-lh-3); 
 .cf-turnstile { min-height: 65px; margin-block: var(--grt-space-sm); }
 .form-status { min-height: var(--grt-step-lh-0); margin: var(--grt-space-sm) 0 0; }
 .form-status[data-kind="ok"] { color: var(--violet); }
-.form-status[data-kind="error"] { color: oklch(0.48 0.17 25); }
+.form-status[data-kind="error"] { color: oklch(0.48 0.17 25); font-weight: 600; font-size: var(--grt-step-1); line-height: var(--grt-step-lh-1); }
+/* Sent: the form gives way to a large confirmation (Will 2026-11-19) */
+.form-sent { max-width: var(--measure); margin-block: var(--grt-space-md) var(--grt-space-xl);
+  padding: var(--grt-space-lg) var(--grt-space-lg) var(--grt-space-md); border: 1px solid oklch(0.80 0.06 290);
+  border-radius: 6px; background: oklch(0.95 0.025 290); }
+@media (max-width: 47.99rem) { .form-sent { padding: var(--grt-space-md) var(--grt-space-sm) var(--grt-space-2xs); } }
+.form-sent:focus { outline: none; }
+.form-sent:focus-visible { outline: 2px solid var(--violet); outline-offset: 4px; }
+.form-sent-title { font-size: var(--grt-step-4); line-height: 1.15; font-weight: 380; color: var(--violet); margin: 0 0 var(--grt-space-xs); }
+.form-sent-body { font-size: var(--grt-step-1); line-height: var(--grt-step-lh-1); margin: 0 0 var(--grt-space-md); }
 
 /* Privacy */
 .privacy h2 { font-size: var(--grt-step-2); line-height: var(--grt-step-lh-2); margin-top: var(--grt-space-lg); }

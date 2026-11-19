@@ -7,6 +7,10 @@
   const button = form.querySelector('button[type="submit"]');
   const say = (msg, kind) => { status.textContent = msg; status.dataset.kind = kind || ""; };
 
+  document.getElementById("send-another")?.addEventListener("click", () => {
+    document.getElementById("form-sent").hidden = true; form.hidden = false; form.elements.name.focus();
+  });
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
@@ -19,7 +23,12 @@
     try {
       const res = await fetch("/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
       if (!res.ok) throw new Error(String(res.status));
-      form.reset(); say("Message sent. I’ll be in touch within one business day.", "ok");
+      // Success replaces the form with a large confirmation panel (Will 2026-11-19: the one-line note was too quiet).
+      form.reset(); say("");
+      const sent = document.getElementById("form-sent");
+      form.hidden = true; sent.hidden = false;
+      sent.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      sent.focus({ preventScroll: true });
     } catch (err) {
       say("That didn’t go through. Please try again in a moment.", "error");
     } finally {
