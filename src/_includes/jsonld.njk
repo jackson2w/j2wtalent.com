@@ -2,7 +2,7 @@
 {%- set canonical = site.url + page.url -%}
 {#- j2wtalent: the person is the same entity williejackson.com describes (its central @id), so both sites point at one
     node; the business is a ProfessionalService founded by him. -#}
-{%- set person = { "@type": "Person", "@id": site.author.id, "name": site.author.name, "url": site.author.url,
+{%- set person = { "@type": "Person", "@id": site.author.id, "name": site.author.name, "alternateName": site.author.alternateName, "url": site.author.url,
     "jobTitle": "Principal, Jackson Talent Strategies", "worksFor": { "@id": site.url + "/#org" }, "sameAs": site.author.sameAs } -%}
 {%- set orgNode = { "@type": "ProfessionalService", "@id": site.url + "/#org", "name": site.org.name, "url": site.url + "/",
     "description": site.description, "founder": { "@id": site.author.id }, "employee": { "@id": site.author.id },

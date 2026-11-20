@@ -5,8 +5,10 @@ export default {
   description: "Willie Jackson, talent strategist and facilitator, works with executives and HR leaders on the human side of high-stakes change, leadership and AI.",
   lang: "en-US", locale: "en_US",
   // The same Person williejackson.com describes (its central @id), so the two sites name one entity.
-  author: { name: "Willie Jackson", url: "https://williejackson.com", id: "https://williejackson.com/#person",
-            sameAs: ["https://williejackson.com/", "https://www.linkedin.com/in/willieljackson/"] },
+  // alternateName + sameAs mirror williejackson.com's Person (Will approved 2026-11-20).
+  author: { name: "Willie Jackson", alternateName: "Willie L. Jackson II", url: "https://williejackson.com", id: "https://williejackson.com/#person",
+            sameAs: ["https://williejackson.com/", "https://www.linkedin.com/in/willieljackson/",
+                     "https://abernathymagazine.com/author/williejackson/", "https://www.wikidata.org/wiki/Q142087430"] },
   publisher: "organization",
   org: { name: "Jackson Talent Strategies", logo: "/icons/icon-512.png" },
   linkedin: "https://www.linkedin.com/in/willieljackson/",
